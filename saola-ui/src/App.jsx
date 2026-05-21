@@ -1,19 +1,20 @@
 /**
- * SAOLA AI LABS — Complete Multi-Page SaaS Website (ESLint-clean)
- * All unused imports removed, unused variables cleaned, setState-in-effect fixed.
+ * SAOLA AI LABS — Repositioned Enterprise AI Adoption Platform
+ * Brand strategy: Enterprise AI Adoption Platform (not AI security vendor)
+ * Per: Saoala_AI_Labs_Repositioning.pdf
  */
 import {
   useState, useEffect, useRef, useCallback, createContext, useContext
 } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
-  Shield, Zap, Eye, BarChart3, FileCheck, Users, ChevronRight,
-  Menu, X, ArrowRight, Cpu, Database, CheckCircle2, Star,
-  Layers, Bell, ArrowUpRight, Building2,
-  LayoutDashboard, GitBranch, FileText, Download, Link2,
-  ScanLine, KeyRound, PieChart, ShieldCheck,
-  Target, Briefcase, Code2, GraduationCap,
-  Plus, Mail, Globe, Rocket, Lightbulb,
+  Rocket, Shield, Eye, BarChart3, Users, ChevronRight,
+  Menu, X, ArrowRight, CheckCircle2, Star,
+  Bell, ArrowUpRight,
+  FileText,
+  KeyRound, ShieldCheck,
+  Mail, Globe, Database,
+  BookOpen, Cpu, Lock, Settings, TrendingUp,
 } from "lucide-react";
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -21,45 +22,50 @@ import {
 // ══════════════════════════════════════════════════════════════════════════════
 
 const C = {
-  teal:       "#00E5CC",
-  tealDim:    "#00B5A0",
-  tealFaint:  "rgba(0,229,204,0.08)",
-  gold:       "#F5C842",
-  goldFaint:  "rgba(245,200,66,0.1)",
-  violet:     "#A78BFA",
-  violetFaint:"rgba(167,139,250,0.08)",
-  coral:      "#F87171",
-  coralFaint: "rgba(248,113,113,0.08)",
-  bg:         "#030712",
-  surface:    "#0D1117",
-  surface2:   "#161B22",
-  surface3:   "#1C2230",
-  border:     "rgba(255,255,255,0.07)",
-  border2:    "rgba(255,255,255,0.13)",
-  muted:      "#6B7280",
-  muted2:     "#94A3B8",
-  text:       "#F0F6FC",
-  textDim:    "#CBD5E1",
+  // Brand accent — deep indigo/violet for enterprise trust
+  accent:      "#4C3FE0",
+  accentLight: "#7267E8",
+  accentFaint: "rgba(76,63,224,0.10)",
+  accentBorder:"rgba(76,63,224,0.30)",
+  // Secondary accents
+  gold:        "#E8A020",
+  goldFaint:   "rgba(232,160,32,0.10)",
+  teal:        "#0EA5A0",
+  tealFaint:   "rgba(14,165,160,0.10)",
+  coral:       "#E05A40",
+  coralFaint:  "rgba(224,90,64,0.08)",
+  // Surfaces — dark enterprise
+  bg:          "#070A12",
+  surface:     "#0D1120",
+  surface2:    "#141828",
+  surface3:    "#1A2035",
+  border:      "rgba(255,255,255,0.07)",
+  border2:     "rgba(255,255,255,0.13)",
+  // Text
+  muted:       "#6B7280",
+  muted2:      "#94A3B8",
+  text:        "#F0F6FC",
+  textDim:     "#CBD5E1",
 };
 
 const ROUTES = {
   home:      "/",
   platform:  "/platform",
-  security:  "/ai-security-tools",
-  services:  "/services",
+  governance:"/governance",
+  usecases:  "/use-cases",
+  security:  "/security",
   pricing:   "/pricing",
   resources: "/resources",
   about:     "/about",
-  problems:  "/problems-we-solve",
 };
 
 const NAV_LINKS = [
   { label: "Platform",    path: ROUTES.platform },
-  { label: "AI Security", path: ROUTES.security },
-  { label: "Consulting",  path: ROUTES.services },
+  { label: "Use Cases",   path: ROUTES.usecases },
+  { label: "Governance",  path: ROUTES.governance },
+  { label: "Security",    path: ROUTES.security },
   { label: "Pricing",     path: ROUTES.pricing },
   { label: "Resources",   path: ROUTES.resources },
-  { label: "About",       path: ROUTES.about },
 ];
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -170,14 +176,6 @@ const fadeUp = {
   }),
 };
 
-const scaleIn = {
-  hidden:  { opacity: 0, scale: 0.92 },
-  visible: (i = 0) => ({
-    opacity: 1, scale: 1,
-    transition: { duration: 0.55, delay: i * 0.08, ease },
-  }),
-};
-
 const PAGE_TRANSITION = {
   initial: { opacity: 0, y: 16 },
   animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease } },
@@ -193,32 +191,32 @@ function Orbs({ intensity = 1 }) {
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       <motion.div
         animate={{ x: [0, 50, 0], y: [0, -40, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
         style={{
           position: "absolute", top: "-30%", left: "-20%",
           width: 700, height: 700, borderRadius: "50%",
-          background: `radial-gradient(circle, ${C.teal} 0%, transparent 70%)`,
-          opacity: 0.10 * intensity,
+          background: `radial-gradient(circle, ${C.accent} 0%, transparent 70%)`,
+          opacity: 0.09 * intensity,
         }}
       />
       <motion.div
         animate={{ x: [0, -60, 0], y: [0, 50, 0] }}
-        transition={{ duration: 26, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+        transition={{ duration: 28, repeat: Infinity, ease: "easeInOut", delay: 5 }}
         style={{
           position: "absolute", top: "40%", right: "-15%",
           width: 500, height: 500, borderRadius: "50%",
-          background: `radial-gradient(circle, ${C.gold} 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${C.teal} 0%, transparent 70%)`,
           opacity: 0.07 * intensity,
         }}
       />
       <motion.div
         animate={{ x: [0, 35, 0], y: [0, 25, 0] }}
-        transition={{ duration: 16, repeat: Infinity, ease: "easeInOut", delay: 8 }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 10 }}
         style={{
           position: "absolute", bottom: "-10%", left: "35%",
           width: 400, height: 400, borderRadius: "50%",
-          background: `radial-gradient(circle, ${C.violet} 0%, transparent 70%)`,
-          opacity: 0.06 * intensity,
+          background: `radial-gradient(circle, ${C.gold} 0%, transparent 70%)`,
+          opacity: 0.05 * intensity,
         }}
       />
     </div>
@@ -239,7 +237,7 @@ function GridLines() {
   );
 }
 
-function SectionLabel({ children, color = C.teal }) {
+function SectionLabel({ children, color = C.accent }) {
   return (
     <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color }}>
       {children}
@@ -247,7 +245,7 @@ function SectionLabel({ children, color = C.teal }) {
   );
 }
 
-function SectionHead({ label, title, sub, center = false, maxW = "max-w-2xl", color = C.teal }) {
+function SectionHead({ label, title, sub, center = false, maxW = "max-w-2xl", color = C.accent }) {
   const [ref, inView] = useScrollReveal();
   return (
     <div ref={ref} className={`${maxW} ${center ? "mx-auto text-center" : ""} mb-16`}>
@@ -257,7 +255,6 @@ function SectionHead({ label, title, sub, center = false, maxW = "max-w-2xl", co
       <motion.h2
         custom={1} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
         className="text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight"
-        style={{ fontFamily: "'DM Sans', sans-serif" }}
       >
         {title}
       </motion.h2>
@@ -273,7 +270,7 @@ function SectionHead({ label, title, sub, center = false, maxW = "max-w-2xl", co
   );
 }
 
-function Pill({ children, color = C.teal, bg }) {
+function Pill({ children, color = C.accent, bg }) {
   return (
     <span
       className="inline-flex items-center text-xs font-bold px-2.5 py-1 rounded-md"
@@ -284,24 +281,36 @@ function Pill({ children, color = C.teal, bg }) {
   );
 }
 
-function GlowBtn({ children, href = "#", primary = true, icon: Icon = ArrowRight, small = false }) {
+function PrimaryBtn({ children, href = "#", small = false, onClick }) {
   return (
     <motion.a
       href={href.startsWith("/") ? `#${href}` : href}
-      whileHover={{ scale: 1.04, boxShadow: primary ? `0 0 36px rgba(0,229,204,0.38)` : undefined }}
+      onClick={onClick}
+      whileHover={{ scale: 1.04, boxShadow: `0 0 36px rgba(76,63,224,0.40)` }}
       whileTap={{ scale: 0.96 }}
       className={`inline-flex items-center gap-2 rounded-xl font-bold ${small ? "px-4 py-2.5 text-sm" : "px-6 py-3.5 text-sm"}`}
-      style={primary
-        ? { background: C.teal, color: "#030712" }
-        : { border: `1px solid ${C.border2}`, color: C.text, background: "rgba(255,255,255,0.04)" }
-      }
+      style={{ background: C.accent, color: "#ffffff" }}
+    >
+      {children} <ArrowRight size={small ? 13 : 15} />
+    </motion.a>
+  );
+}
+
+function GhostBtn({ children, href = "#", small = false, icon: Icon = ChevronRight }) {
+  return (
+    <motion.a
+      href={href.startsWith("/") ? `#${href}` : href}
+      whileHover={{ scale: 1.03 }}
+      whileTap={{ scale: 0.97 }}
+      className={`inline-flex items-center gap-2 rounded-xl font-bold ${small ? "px-4 py-2.5 text-sm" : "px-6 py-3.5 text-sm"}`}
+      style={{ border: `1px solid ${C.border2}`, color: C.text, background: "rgba(255,255,255,0.04)" }}
     >
       {children} {Icon && <Icon size={small ? 13 : 15} />}
     </motion.a>
   );
 }
 
-function FeatureCard({ icon: Icon, title, features = [], accent = C.teal, custom = 0, inView = true }) {
+function FeatureCard({ icon: Icon, title, features = [], accent = C.accent, custom = 0, inView = true }) {
   return (
     <motion.div
       custom={custom} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
@@ -330,11 +339,11 @@ function FeatureCard({ icon: Icon, title, features = [], accent = C.teal, custom
   );
 }
 
-function PageHero({ eyebrow, title, sub, cta1, cta2, noOrbs = false }) {
+function PageHero({ eyebrow, title, sub, cta1, cta2 }) {
   return (
-    <section className="relative min-h-[60vh] flex items-center overflow-hidden pt-20 pb-16"
+    <section className="relative min-h-[60vh] flex items-center overflow-hidden pt-24 pb-16"
       style={{ background: C.bg }}>
-      {!noOrbs && <Orbs intensity={0.7} />}
+      <Orbs intensity={0.8} />
       <GridLines />
       <div className="relative max-w-7xl mx-auto px-6 w-full">
         <div className="max-w-3xl">
@@ -342,23 +351,22 @@ function PageHero({ eyebrow, title, sub, cta1, cta2, noOrbs = false }) {
             {eyebrow && (
               <div
                 className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-7 border"
-                style={{ border: `1px solid rgba(0,229,204,0.3)`, background: "rgba(0,229,204,0.06)", color: C.teal }}
+                style={{ border: `1px solid ${C.accentBorder}`, background: C.accentFaint, color: C.accentLight }}
               >
-                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.teal }} />
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.accent }} />
                 {eyebrow}
               </div>
             )}
             <h1
               className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.07] tracking-tight mb-5"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               {title}
             </h1>
             {sub && <p className="text-lg mb-8 leading-relaxed max-w-xl" style={{ color: C.muted2 }}>{sub}</p>}
             {(cta1 || cta2) && (
               <div className="flex flex-wrap gap-3">
-                {cta1 && <GlowBtn href={cta1.href || "#"}>{cta1.label}</GlowBtn>}
-                {cta2 && <GlowBtn href={cta2.href || "#"} primary={false} icon={cta2.icon || ChevronRight}>{cta2.label}</GlowBtn>}
+                {cta1 && <PrimaryBtn href={cta1.href || "#"}>{cta1.label}</PrimaryBtn>}
+                {cta2 && <GhostBtn href={cta2.href || "#"}>{cta2.label}</GhostBtn>}
               </div>
             )}
           </motion.div>
@@ -377,25 +385,23 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const scrolled = useScrolled();
   const progress = useScrollProgress();
-
-  // FIX: close mobile menu on route change without setState-in-effect warning
   const prevPath = useRef(path);
+
   useEffect(() => {
-  if (prevPath.current !== path) {
-    prevPath.current = path;
-    setOpen(false);
-  }
-}, [path]);
+    if (prevPath.current !== path) {
+      prevPath.current = path;
+      setOpen(false);
+    }
+  }, [path]);
 
   return (
     <>
-      {/* Scroll progress bar */}
       <div className="fixed top-0 inset-x-0 h-[2px] z-[60] pointer-events-none">
         <motion.div
           className="h-full"
           style={{
             width: `${progress * 100}%`,
-            background: `linear-gradient(90deg, ${C.teal}, ${C.gold})`,
+            background: `linear-gradient(90deg, ${C.accent}, ${C.teal})`,
           }}
         />
       </div>
@@ -409,7 +415,7 @@ function Navbar() {
         <div
           className="transition-all duration-300"
           style={{
-            background: scrolled ? "rgba(3,7,18,0.88)" : "transparent",
+            background: scrolled ? "rgba(7,10,18,0.92)" : "transparent",
             backdropFilter: scrolled ? "blur(24px)" : "none",
             borderBottom: scrolled ? `1px solid ${C.border}` : "1px solid transparent",
           }}
@@ -417,32 +423,18 @@ function Navbar() {
           <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             {/* Logo */}
             <Link to={ROUTES.home} className="flex items-center gap-3 shrink-0">
-  <img
-  src="/logo.png"
-  alt="Saola AI Labs"
-  className="w-14 h-14 object-contain"
-/>
-
-  <div className="flex flex-col leading-tight">
-    <span
-      className="font-bold text-2xl tracking-tight"
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
-    >
-      <span style={{ color: C.teal }}>Saola</span>{" "}
-      <span style={{ color: "white" }}>AI Labs</span>
-    </span>
-
-    <span
-      className="text-sm"
-      style={{ color: "#D1D5DB" }}
-    >
-      Intelligence with integrity.
-    </span>
-  </div>
-</Link>
+              <img src="/logo.png" alt="Saola AI Labs" className="w-12 h-12 object-contain" />
+              <div className="flex flex-col leading-tight">
+                <span className="font-bold text-xl tracking-tight">
+                  <span style={{ color: C.accentLight }}>Saola</span>{" "}
+                  <span style={{ color: C.text }}>AI Labs</span>
+                </span>
+                <span className="text-xs" style={{ color: C.muted }}>Enterprise AI Adoption Platform</span>
+              </div>
+            </Link>
 
             {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-8 ml-10">
+            <nav className="hidden md:flex items-center gap-7 ml-8">
               {NAV_LINKS.map(link => {
                 const active = path === link.path;
                 return (
@@ -457,7 +449,7 @@ function Navbar() {
                       <motion.span
                         layoutId="nav-indicator"
                         className="absolute -bottom-0.5 inset-x-0 h-px"
-                        style={{ background: C.teal }}
+                        style={{ background: C.accent }}
                       />
                     )}
                   </Link>
@@ -465,15 +457,13 @@ function Navbar() {
               })}
             </nav>
 
-            {/* Desktop CTA */}
             <div className="hidden md:flex items-center gap-3">
               <Link to={ROUTES.home} className="text-sm font-medium" style={{ color: C.muted }}>
                 Sign in
               </Link>
-              <GlowBtn href={ROUTES.pricing} small>Book a Demo</GlowBtn>
+              <PrimaryBtn href={ROUTES.pricing} small>Book a Demo</PrimaryBtn>
             </div>
 
-            {/* Mobile toggle */}
             <button
               className="md:hidden p-2 rounded-lg border transition-colors"
               style={{ color: C.text, border: `1px solid ${C.border}`, background: "rgba(255,255,255,0.03)" }}
@@ -485,7 +475,6 @@ function Navbar() {
           </div>
         </div>
 
-        {/* Mobile menu */}
         <AnimatePresence>
           {open && (
             <motion.div
@@ -495,7 +484,7 @@ function Navbar() {
               transition={{ duration: 0.28, ease }}
               className="md:hidden overflow-hidden"
               style={{
-                background: "rgba(13,17,23,0.97)",
+                background: "rgba(13,17,32,0.97)",
                 backdropFilter: "blur(24px)",
                 borderBottom: `1px solid ${C.border}`,
               }}
@@ -513,7 +502,7 @@ function Navbar() {
                       <Link
                         to={link.path}
                         className="flex items-center justify-between py-3 border-b text-sm font-medium"
-                        style={{ color: active ? C.teal : C.muted2, borderColor: C.border }}
+                        style={{ color: active ? C.accentLight : C.muted2, borderColor: C.border }}
                       >
                         {link.label}
                         <ChevronRight size={14} />
@@ -522,7 +511,7 @@ function Navbar() {
                   );
                 })}
                 <div className="pt-4">
-                  <GlowBtn href={ROUTES.pricing}>Book a Demo</GlowBtn>
+                  <PrimaryBtn href={ROUTES.pricing}>Book a Demo</PrimaryBtn>
                 </div>
               </nav>
             </motion.div>
@@ -537,8 +526,7 @@ function Navbar() {
 // FOOTER
 // ══════════════════════════════════════════════════════════════════════════════
 
-// Simple LinkedIn SVG (lucide-react doesn't reliably export it)
-function LinkedInicon({ size = 14 }) {
+function LinkedInIcon({ size = 14 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -551,93 +539,74 @@ function LinkedInicon({ size = 14 }) {
 function Footer() {
   const cols = [
     {
-      title: "Product",
+      title: "Platform",
       links: [
-        { label: "Platform",          path: ROUTES.platform },
-        { label: "AI Security Tools", path: ROUTES.security },
-        { label: "Consulting",        path: ROUTES.services },
+        { label: "Platform Overview", path: ROUTES.platform },
+        { label: "AI Adoption",       path: ROUTES.platform },
+        { label: "Governance Layer",  path: ROUTES.governance },
+        { label: "Security Controls", path: ROUTES.security },
         { label: "Pricing",           path: ROUTES.pricing },
       ],
     },
     {
-      title: "Resources",
+      title: "Solutions",
       links: [
-        { label: "Blog",     path: ROUTES.resources },
-        { label: "Guides",   path: ROUTES.resources },
-        { label: "Webinars", path: ROUTES.resources },
+        { label: "Use Cases",         path: ROUTES.usecases },
+        { label: "By Industry",       path: ROUTES.usecases },
+        { label: "Enterprise Search", path: ROUTES.usecases },
+        { label: "AI Agents",         path: ROUTES.usecases },
       ],
     },
     {
       title: "Company",
       links: [
-        { label: "About",            path: ROUTES.about },
-        { label: "Problems We Solve",path: ROUTES.problems },
-        { label: "Careers",          path: ROUTES.about },
-        { label: "Contact",          path: ROUTES.about },
+        { label: "About",     path: ROUTES.about },
+        { label: "Resources", path: ROUTES.resources },
+        { label: "Blog",      path: ROUTES.resources },
+        { label: "Careers",   path: ROUTES.about },
+        { label: "Contact",   path: ROUTES.about },
       ],
     },
     {
       title: "Legal",
       links: [
-        { label: "Privacy",     path: ROUTES.home },
-        { label: "Terms",       path: ROUTES.home },
-        { label: "DPA Notice",  path: ROUTES.home },
+        { label: "Privacy",   path: ROUTES.home },
+        { label: "Terms",     path: ROUTES.home },
+        { label: "Security",  path: ROUTES.home },
+        { label: "DPA Notice",path: ROUTES.home },
       ],
     },
-  ];
-
-  const socialIcons = [
-    { Icon: Mail, label: "Email" },
-    { Icon: Globe, label: "Website" },
-    { Icon: LinkedInicon, label: "LinkedIn" },
   ];
 
   return (
     <footer style={{ background: C.surface, borderTop: `1px solid ${C.border}` }}>
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
-          {/* Brand */}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <img
-               src="/logo.png"
-               alt="Saola AI Labs"
-               className="w-10 h-10 object-contain"
-              />
-              <span className="font-bold text-white" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                Saola AI Labs
-              </span>
+              <img src="/logo.png" alt="Saola AI Labs" className="w-9 h-9 object-contain" />
+              <span className="font-bold text-white">Saola AI Labs</span>
             </div>
-            <p className="text-sm leading-relaxed mb-4" style={{ color: C.muted }}>
-              AI Security, Privacy & Compliance for Indian SMBs and beyond.
+            <p className="text-sm leading-relaxed mb-5" style={{ color: C.muted }}>
+              The enterprise infrastructure layer for governed AI adoption. Deploy AI securely at scale.
             </p>
             <div className="flex gap-2">
-              {socialIcons.map(({ Icon, label }) => (
+              {[{ Icon: Mail, label: "Email" }, { Icon: Globe, label: "Website" }, { Icon: LinkedInIcon, label: "LinkedIn" }].map(({ Icon, label }) => (
                 <a
-                  key={label}
-                  href="#"
-                  aria-label={label}
+                  key={label} href="#" aria-label={label}
                   className="w-8 h-8 rounded-lg flex items-center justify-center border transition-colors duration-200"
                   style={{ border: `1px solid ${C.border}`, color: C.muted }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.borderColor = C.teal;
-                    e.currentTarget.style.color = C.teal;
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.borderColor = C.border;
-                    e.currentTarget.style.color = C.muted;
-                  }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = C.accent; e.currentTarget.style.color = C.accentLight; }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.color = C.muted; }}
                 >
                   <Icon size={14} />
                 </a>
               ))}
             </div>
           </div>
-
-          {/* Nav cols */}
           {cols.map((col) => (
             <div key={col.title}>
-              <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "#374151" }}>
+              <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: C.muted }}>
                 {col.title}
               </p>
               <ul className="space-y-2.5">
@@ -658,13 +627,12 @@ function Footer() {
             </div>
           ))}
         </div>
-
         <div
           className="pt-6 border-t flex flex-col md:flex-row items-center justify-between gap-3"
           style={{ borderColor: C.border }}
         >
           <p className="text-xs" style={{ color: C.muted }}>© 2026 Saola AI Labs · All rights reserved.</p>
-          <p className="text-xs" style={{ color: C.muted }}>Built for the era of AI-everywhere.</p>
+          <p className="text-xs" style={{ color: C.muted }}>Operationalize AI securely.</p>
         </div>
       </div>
     </footer>
@@ -675,11 +643,11 @@ function Footer() {
 // SHARED SECTION COMPONENTS
 // ══════════════════════════════════════════════════════════════════════════════
 
-function FinalCTABand({ title = "Ready to turn AI risk into a competitive advantage?", sub }) {
+function FinalCTABand({ title = "Ready to operationalize AI across your enterprise?", sub }) {
   const [ref, inView] = useScrollReveal();
   return (
     <section className="py-28 relative overflow-hidden" style={{ background: C.bg }}>
-      <Orbs intensity={0.8} />
+      <Orbs intensity={0.9} />
       <div className="max-w-3xl mx-auto px-6 text-center relative" ref={ref}>
         <motion.div custom={0} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}>
           <SectionLabel>Get started today</SectionLabel>
@@ -687,7 +655,6 @@ function FinalCTABand({ title = "Ready to turn AI risk into a competitive advant
         <motion.h2
           custom={1} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
           className="text-4xl lg:text-5xl font-bold text-white mb-5 leading-tight"
-          style={{ fontFamily: "'DM Sans', sans-serif" }}
         >
           {title}
         </motion.h2>
@@ -703,8 +670,8 @@ function FinalCTABand({ title = "Ready to turn AI risk into a competitive advant
           custom={3} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
           className="flex flex-wrap gap-4 justify-center"
         >
-          <GlowBtn href={ROUTES.pricing}>Start Free Trial</GlowBtn>
-          <GlowBtn href={ROUTES.services} primary={false} icon={ChevronRight}>Talk to an Expert</GlowBtn>
+          <PrimaryBtn href={ROUTES.pricing}>Book a Demo</PrimaryBtn>
+          <GhostBtn href={ROUTES.platform}>See Platform Overview</GhostBtn>
         </motion.div>
       </div>
     </section>
@@ -721,8 +688,7 @@ function StatsBand({ stats }) {
             key={i} custom={i} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
             className="text-center"
           >
-            <div className="text-3xl lg:text-4xl font-bold mb-1"
-              style={{ color: C.teal, fontFamily: "'DM Sans', sans-serif" }}>{s.val}</div>
+            <div className="text-3xl lg:text-4xl font-bold mb-1" style={{ color: C.accentLight }}>{s.val}</div>
             <div className="text-sm" style={{ color: C.muted }}>{s.label}</div>
           </motion.div>
         ))}
@@ -734,36 +700,33 @@ function StatsBand({ stats }) {
 function TestimonialsSection() {
   const [ref, inView] = useScrollReveal();
   const items = [
-    { q: "Saola AI Labs made AI compliance simple and visible across our product teams. The readiness score moved 22 points in the first month.", name: "Arjun Mehta", role: "CTO · SaaS company, Bengaluru" },
-    { q: "The risk dashboard and policy automation eliminated our cross-border data worry in 30 days. The ROI was immediate.", name: "Priya Rao", role: "CISO · Fintech Startup, Delhi" },
-    { q: "Training plus platform workflows gave our leadership real confidence heading into our first AI audit. Zero surprises.", name: "Kiran Joshi", role: "Head of Security Ops · Healthcare Tech, Hyderabad" },
+    { q: "Saola moved us from fragmented AI experiments to governed, production-ready workflows in under 90 days. The ROI was immediate.", name: "Arjun Mehta", role: "CTO · Enterprise SaaS, Bengaluru" },
+    { q: "We finally have one layer that governs every AI interaction across our teams. Shadow AI dropped 60% in the first quarter.", name: "Priya Rao", role: "Chief AI Officer · Fintech, Delhi" },
+    { q: "The platform architecture diagram alone convinced our board. Saola is infrastructure, not just tooling.", name: "Kiran Joshi", role: "VP Engineering · Healthcare Tech, Hyderabad" },
   ];
   return (
     <section className="py-24" style={{ background: C.surface }}>
       <div className="max-w-7xl mx-auto px-6" ref={ref}>
-        <SectionHead label="Social proof" title="Trusted by growing SMBs"
-          sub="Indian and international clients in SaaS, fintech, healthcare, and manufacturing."
+        <SectionHead label="Enterprise proof" title="Trusted by organizations scaling AI"
+          sub="Enterprises across SaaS, fintech, healthcare, and operations."
           center maxW="max-w-xl" />
         <div className="grid md:grid-cols-3 gap-5">
           {items.map((t, i) => (
             <motion.div
               key={i} custom={i} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
-              whileHover={{ y: -4 }}
-              className="p-6 rounded-2xl border relative overflow-hidden cursor-default"
+              className="rounded-2xl p-7 border flex flex-col gap-4"
               style={{ background: C.bg, border: `1px solid ${C.border}` }}
             >
-              <div className="flex gap-0.5 mb-4">
-                {[...Array(5)].map((_, j) => (
-                  <Star key={j} size={13} fill={C.gold} style={{ color: C.gold }} />
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, s) => (
+                  <Star key={s} size={13} style={{ color: C.gold }} fill={C.gold} />
                 ))}
               </div>
-              <p className="text-sm leading-relaxed mb-5" style={{ color: C.textDim }}>"{t.q}"</p>
+              <p className="text-sm leading-relaxed flex-1" style={{ color: C.muted2 }}>"{t.q}"</p>
               <div>
                 <p className="text-sm font-semibold text-white">{t.name}</p>
                 <p className="text-xs mt-0.5" style={{ color: C.muted }}>{t.role}</p>
               </div>
-              <div className="absolute -bottom-2 -right-2 text-[80px] font-serif leading-none select-none"
-                style={{ color: "rgba(0,229,204,0.05)" }}>"</div>
             </motion.div>
           ))}
         </div>
@@ -773,258 +736,189 @@ function TestimonialsSection() {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// PAGE: HOME
+// HOME PAGE
 // ══════════════════════════════════════════════════════════════════════════════
 
-function DashboardCard() {
-  const risks = [
-    { label: "Sales Assistant",  risk: "High",   color: "#EF4444", bg: "rgba(239,68,68,0.12)" },
-    { label: "Support Bot",      risk: "Medium", color: "#F59E0B", bg: "rgba(245,158,11,0.12)" },
-    { label: "Doc Summarizer",   risk: "Low",    color: "#10B981", bg: "rgba(16,185,129,0.12)" },
-  ];
-  const bars = [
-    { label: "GDPR Readiness",  pct: 94, color: C.teal },
-    { label: "DPDPA Readiness", pct: 78, color: C.gold },
-    { label: "ISO 42001",       pct: 61, color: C.violet },
+function ArchDiagram() {
+  const [ref, inView] = useScrollReveal();
+  const nodes = [
+    { label: "Enterprise Data", sub: "Docs, APIs, systems", icon: Database },
+    { label: "Policy Layer", sub: "Access & governance", icon: Shield },
+    { label: "Saola Platform", sub: "AI operations hub", icon: Cpu, highlight: true },
+    { label: "AI Outputs", sub: "Agents, copilots", icon: Rocket },
+    { label: "Observability", sub: "Monitor & audit", icon: Eye },
   ];
   return (
-    <div className="rounded-2xl p-5 border"
-      style={{
-        background: "rgba(13,17,23,0.9)", border: `1px solid ${C.border2}`,
-        backdropFilter: "blur(24px)", boxShadow: "0 32px 80px rgba(0,0,0,0.6)",
-      }}>
-      <div className="flex items-center justify-between mb-5">
-        <span className="text-xs font-semibold" style={{ color: C.muted }}>COMPLIANCE OVERVIEW</span>
-        <span className="flex items-center gap-1.5 text-xs font-semibold" style={{ color: C.teal }}>
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.teal }} />
-          Live
-        </span>
-      </div>
-      {bars.map((b, i) => (
-        <div key={i} className="mb-3">
-          <div className="flex justify-between text-xs mb-1" style={{ color: C.muted }}>
-            <span>{b.label}</span><span style={{ color: C.text }}>{b.pct}%</span>
-          </div>
-          <div className="h-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.07)" }}>
-            <motion.div
-              initial={{ width: 0 }} animate={{ width: `${b.pct}%` }}
-              transition={{ duration: 1.4, delay: 0.7 + i * 0.2, ease }}
-              className="h-full rounded-full" style={{ background: b.color }}
-            />
-          </div>
-        </div>
-      ))}
-      <div className="mt-5 mb-3 text-xs font-semibold" style={{ color: C.muted }}>AI USE CASES</div>
-      {risks.map((it, i) => (
-        <motion.div
-          key={i} initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 1.1 + i * 0.1 }}
-          className="flex items-center justify-between py-2.5 border-b last:border-0"
-          style={{ borderColor: C.border }}
-        >
-          <span className="text-sm" style={{ color: C.text }}>{it.label}</span>
-          <span className="text-xs px-2 py-0.5 rounded-full font-semibold"
-            style={{ color: it.color, background: it.bg }}>{it.risk}</span>
-        </motion.div>
-      ))}
-      <div className="mt-4 flex items-center gap-2 text-xs" style={{ color: C.teal }}>
-        <Bell size={12} /> 4 policy updates recommended
+    <div ref={ref} className="mt-14">
+      <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: C.muted }}>
+        How the platform works end-to-end
+      </p>
+      <div className="flex items-center gap-0 flex-wrap">
+        {nodes.map((n, i) => {
+          const Icon = n.icon;
+          return (
+            <div key={i} className="flex items-center">
+              <motion.div
+                custom={i}
+                variants={fadeUp}
+                initial="hidden"
+                animate={inView ? "visible" : "hidden"}
+                className="rounded-xl border p-4 flex flex-col items-center text-center min-w-[110px]"
+                style={{
+                  background: n.highlight ? C.accent : C.surface2,
+                  border: `1px solid ${n.highlight ? C.accent : C.border}`,
+                }}
+              >
+                <Icon size={18} style={{ color: n.highlight ? "#fff" : C.accentLight }} className="mb-2" />
+                <p className="text-xs font-semibold" style={{ color: n.highlight ? "#fff" : C.text }}>{n.label}</p>
+                <p className="text-[10px] mt-0.5" style={{ color: n.highlight ? "rgba(255,255,255,0.7)" : C.muted }}>{n.sub}</p>
+              </motion.div>
+              {i < nodes.length - 1 && (
+                <ArrowRight size={16} style={{ color: C.border2, margin: "0 6px", flexShrink: 0 }} />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
 }
 
 function HomePage() {
-  const { scrollYProgress } = useScroll();
-  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, -50]);
-  const heroO = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const [ref, inView] = useScrollReveal();
 
   const problems = [
-    { icon: Eye,       title: "Shadow GenAI usage",        desc: "Teams use external models without security review, risking data leaks and reputation damage." },
-    { icon: FileCheck, title: "No AI governance policy",   desc: "Policy gaps create inconsistent controls and unclear accountability across departments." },
-    { icon: Database,  title: "PII in prompts",            desc: "Sensitive data flows into AI engines unintentionally, triggering GDPR/DPDPA exposure." },
-    { icon: BarChart3, title: "Compliance visibility gap", desc: "No single pane of glass for obligations across AI use cases and regulatory frameworks." },
-    { icon: Users,     title: "Budget & team limits",      desc: "SMBs can't hire large privacy teams but still need institutional-grade controls." },
+    { num: "01", title: "Fragmented AI adoption", desc: "Teams deploy AI tools in silos with no central visibility, creating inconsistency and compliance gaps." },
+    { num: "02", title: "Shadow AI risk", desc: "Unauthorized models expose sensitive organizational knowledge without policy enforcement." },
+    { num: "03", title: "Pilots that don't scale", desc: "Without shared infrastructure, successful experiments can't cross team boundaries or reach production." },
+    { num: "04", title: "Knowledge trapped in silos", desc: "Enterprise data lives in dozens of systems. AI can't access it securely without a unified retrieval layer." },
   ];
 
-  const capabilities = [
-    { icon: Layers,  title: "Platform · Privacy & Compliance", accent: C.teal,   features: ["GDPR, DPDPA, ISO 42001 readiness workspace", "Automated assessments & gap analysis", "Audit-ready evidence tracking", "Dynamic compliance scoring"] },
-    { icon: Shield,  title: "AI Security Tools",               accent: C.gold,   features: ["PII/PHI detection & masking", "Role-based model access control", "Continuous misuse monitoring", "Exportable risk reports"] },
-    { icon: Users,   title: "Advisory & Training",             accent: C.violet, features: ["NIST AI RMF aligned design", "GDPR/DPDPA gap analysis", "Executive & developer training", "Policy playbooks & frameworks"] },
+  const pillars = [
+    { icon: Rocket, title: "Enterprise AI Adoption", color: C.accent, desc: "Deploy copilots, assistants, and knowledge workflows into real operational processes.", tags: ["Copilots", "Workflow AI", "Assistants"] },
+    { icon: ShieldCheck, title: "Governance & Policy", color: C.teal, desc: "Manage access, approval flows, audit trails, and compliance centrally. Built in, not bolted on.", tags: ["RBAC", "Audit Logs", "Policy Enforcement"] },
+    { icon: Lock, title: "Enterprise Security", color: C.gold, desc: "Protect sensitive data, control inference boundaries, and secure internal knowledge.", tags: ["Data Privacy", "Secure RAG", "Encryption"] },
+    { icon: Settings, title: "AI Operations Infrastructure", color: C.coral, desc: "Orchestrate agents, monitor performance, and integrate across your enterprise tech stack.", tags: ["Observability", "Orchestration", "Integrations"] },
   ];
 
-  const steps = [
-    { n: "01", icon: Eye,       title: "Discover",    desc: "Inventory AI use cases, data flows, and risks via guided questionnaires." },
-    { n: "02", icon: Cpu,       title: "Design",      desc: "Auto-suggest controls, policies, and technical safeguards tailored to your profile." },
-    { n: "03", icon: Zap,       title: "Deploy",      desc: "Activate workflows, secure LLM access, and launch role-based training." },
-    { n: "04", icon: BarChart3, title: "Demonstrate", desc: "Maintain audit evidence, dashboards, and compliance reports for any regulator." },
+  const useCases = [
+    { icon: "💬", title: "Internal AI Assistants", desc: "Policy-aware copilots that answer employee questions using secure enterprise knowledge." },
+    { icon: "🔍", title: "Secure Enterprise Search", desc: "Unified AI search across documents and systems with access controls enforced at retrieval." },
+    { icon: "⚡", title: "Workflow Automation", desc: "AI-powered operations that route, process, and act without shadow tool risk." },
+    { icon: "🤖", title: "AI Agent Deployment", desc: "Orchestrate multi-step agents with governance rails and full observability." },
+    { icon: "📋", title: "Compliance-Sensitive AI", desc: "Run AI in regulated environments with audit trails and data boundary controls." },
+    { icon: "🧠", title: "Knowledge Intelligence", desc: "Surface institutional knowledge through secure RAG pipelines that respect data boundaries." },
   ];
-
-  const [probRef, probInView] = useScrollReveal();
-  const [capRef, capInView]   = useScrollReveal();
-  const [stepRef, stepInView] = useScrollReveal();
 
   return (
     <motion.div {...PAGE_TRANSITION}>
       {/* HERO */}
-      <section className="relative min-h-screen flex items-center overflow-hidden pt-28" style={{ background: C.bg }}>
-        <Orbs />
+      <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-28 pb-16"
+        style={{ background: C.bg }}>
+        <Orbs intensity={1} />
         <GridLines />
-        <motion.div style={{ y: heroY, opacity: heroO }}
-          className="relative max-w-7xl mx-auto px-6 py-32 w-full">
-          <div className="max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-8 border"
-              style={{ border: `1px solid rgba(0,229,204,0.3)`, background: "rgba(0,229,204,0.06)", color: C.teal }}
-            >
-              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.teal }} />
-              AI Governance · GDPR · DPDPA · ISO 42001
-            </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease }}
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-6"
-              style={{ fontFamily: "'DM Sans', sans-serif" }}
-            >
-              Bridge AI innovation<br />
-              with <span style={{ color: C.teal }}>Kavach</span>-level<br />
-              protection.
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.35 }}
-              className="text-lg max-w-xl mb-10 leading-relaxed" style={{ color: C.muted2 }}
-            >
-              Saola AI Labs helps growing businesses design, secure, and govern AI—with compliance for GDPR, DPDPA, and ISO 42001 built in from day one.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.45 }}
-              className="flex flex-wrap gap-3 mb-12"
-            >
-              <GlowBtn href={ROUTES.pricing}>Book a Demo</GlowBtn>
-              <GlowBtn href={ROUTES.pricing} primary={false} icon={ChevronRight}>Explore Pricing</GlowBtn>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex flex-wrap gap-2.5"
-            >
-              {["Built for Indian SMBs", "Fast onboarding", "AI Privacy + Security", "No big team needed"].map((t, i) => (
-                <span key={i} className="text-xs px-3 py-1.5 rounded-full border"
-                  style={{ color: C.muted, border: `1px solid ${C.border}` }}>{t}</span>
-              ))}
-            </motion.div>
-          </div>
-
+        <div className="relative max-w-7xl mx-auto px-6 w-full">
           <motion.div
-            initial={{ opacity: 0, x: 60, y: 20 }} animate={{ opacity: 1, x: 0, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease }}
-            className="hidden lg:block absolute right-6 top-1/2 -translate-y-1/2 w-[360px]"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease }}
           >
-            <DashboardCard />
+            <div
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-7 border"
+              style={{ border: `1px solid ${C.accentBorder}`, background: C.accentFaint, color: C.accentLight }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: C.accent }} />
+              Enterprise AI Adoption Platform
+            </div>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-6 max-w-4xl">
+              Deploy AI across your<br />
+              organization,{" "}
+              <span style={{ color: C.accentLight }}>securely</span>{" "}
+              and at scale.
+            </h1>
+            <p className="text-xl mb-10 leading-relaxed max-w-xl" style={{ color: C.muted2 }}>
+              Saola helps enterprises launch AI copilots, agents, and knowledge workflows with governance, privacy, and operational control built in from day one.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <PrimaryBtn href={ROUTES.pricing}>Book a Demo</PrimaryBtn>
+              <GhostBtn href={ROUTES.platform}>Explore the Platform</GhostBtn>
+            </div>
           </motion.div>
-        </motion.div>
+          <ArchDiagram />
+        </div>
       </section>
 
+      {/* STATS */}
       <StatsBand stats={[
-        { val: "82%",  label: "Avg compliance lift in 30 days" },
-        { val: "3×",   label: "Faster audit preparation" },
-        { val: "Zero", label: "Large team required" },
-        { val: "500+", label: "SMBs across India & beyond" },
+        { val: "4×", label: "Faster AI pilot to production" },
+        { val: "100%", label: "AI interactions governed by default" },
+        { val: "60%", label: "Reduction in shadow AI tool usage" },
+        { val: "90d", label: "Median time to enterprise deployment" },
       ]} />
 
-      {/* PROBLEMS */}
-      <section className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-7xl mx-auto px-6" ref={probRef}>
-          <SectionHead label="The Problem" title="Why SMBs struggle with AI today"
-            sub="Without structured governance, AI projects quickly become risk exposures and compliance gaps."
-            maxW="max-w-xl" />
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {problems.map((it, i) => (
+      {/* PROBLEM */}
+      <section className="py-24" style={{ background: C.surface }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHead
+            label="The enterprise AI challenge"
+            title="AI is happening before governance is ready."
+            sub="Most organizations face the same four blockers when moving from AI pilots to enterprise production."
+          />
+          <div className="grid md:grid-cols-2 gap-1 rounded-2xl overflow-hidden border" style={{ borderColor: C.border }} ref={ref}>
+            {problems.map((p, i) => (
               <motion.div
-                key={i} custom={i} variants={fadeUp} initial="hidden" animate={probInView ? "visible" : "hidden"}
-                whileHover={{ y: -4, borderColor: "rgba(0,229,204,0.2)" }}
-                className="group p-6 rounded-2xl border transition-all duration-300 cursor-default"
-                style={{ background: C.surface, border: `1px solid ${C.border}` }}
+                key={i} custom={i} variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"}
+                className="p-8 border-b border-r"
+                style={{ background: C.bg, borderColor: C.border }}
               >
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
-                  style={{ background: C.tealFaint }}>
-                  <it.icon size={18} style={{ color: C.teal }} />
-                </div>
-                <h3 className="font-semibold text-white mb-2">{it.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{it.desc}</p>
+                <div className="text-4xl font-bold mb-4" style={{ color: "#1e1a4a" }}>{p.num}</div>
+                <h3 className="text-base font-semibold text-white mb-2">{p.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{p.desc}</p>
               </motion.div>
             ))}
-            <motion.div
-              custom={5} variants={fadeUp} initial="hidden" animate={probInView ? "visible" : "hidden"}
-              className="p-6 rounded-2xl border flex flex-col justify-between"
-              style={{ background: "rgba(0,229,204,0.04)", border: "1px solid rgba(0,229,204,0.15)" }}
-            >
-              <div>
-                <p className="text-sm font-semibold mb-2" style={{ color: C.teal }}>Sound familiar?</p>
-                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>
-                  We built Saola AI Labs because we lived these problems inside growing companies.
-                </p>
-              </div>
-              <Link to={ROUTES.problems}
-                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold"
-                style={{ color: C.teal }}>
-                See all challenges <ArrowRight size={13} />
-              </Link>
-            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* CAPABILITIES */}
-      <section className="py-24" style={{ background: C.surface }}>
-        <div className="max-w-7xl mx-auto px-6" ref={capRef}>
-          <SectionHead label="What we do" title="Three pillars of AI governance"
-            sub="One platform. Three integrated capabilities. Complete AI security and compliance coverage."
-            center maxW="max-w-2xl" />
-          <div className="grid lg:grid-cols-3 gap-5">
-            {capabilities.map((c, i) => (
-              <FeatureCard key={i} {...c} custom={i} inView={capInView} />
+      {/* PLATFORM PILLARS */}
+      <section className="py-24" style={{ background: C.bg }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHead
+            label="The Saola platform"
+            title="One platform. Four pillars. Enterprise-grade adoption."
+            sub="Saola unifies AI deployment, policy enforcement, security controls, and operational visibility into a single infrastructure layer."
+          />
+          <div className="grid md:grid-cols-2 gap-5">
+            {pillars.map((p, i) => (
+              <FeatureCard
+                key={i} icon={p.icon} title={p.title} accent={p.color} custom={i}
+                features={p.tags.map(t => t)}
+                inView={true}
+              />
             ))}
           </div>
-          <div className="text-center mt-8">
-            <Link to={ROUTES.platform}
-              className="inline-flex items-center gap-1.5 text-sm font-semibold"
-              style={{ color: C.teal }}>
-              Compare all capabilities <ArrowRight size={13} />
-            </Link>
-          </div>
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
-      <section className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-7xl mx-auto px-6" ref={stepRef}>
-          <SectionHead label="How it works" title="From chaos to governed AI"
-            sub="A 4-step transformation that aligns people, process, and technology in weeks—not months."
-            center maxW="max-w-2xl" />
-          <div className="grid lg:grid-cols-4 gap-5">
-            {steps.map((s, i) => (
-              <motion.div key={i} custom={i} variants={fadeUp} initial="hidden" animate={stepInView ? "visible" : "hidden"}>
-                <div className="p-6 rounded-2xl border h-full"
-                  style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-                  <div className="flex items-center gap-3 mb-5">
-                    <span className="text-xs font-bold tabular-nums" style={{ color: C.teal }}>{s.n}</span>
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center"
-                      style={{ background: C.tealFaint }}>
-                      <s.icon size={16} style={{ color: C.teal }} />
-                    </div>
-                  </div>
-                  <h3 className="font-bold text-white mb-2">{s.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{s.desc}</p>
-                </div>
+      {/* USE CASES */}
+      <section className="py-24" style={{ background: C.surface }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHead
+            label="Use cases"
+            title="From pilots to production workflows."
+            sub="Real operational use cases enterprises deploy on Saola today."
+          />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {useCases.map((u, i) => (
+              <motion.div
+                key={i} custom={i} variants={fadeUp} initial="hidden" animate="visible"
+                whileHover={{ y: -4, borderColor: `${C.accent}40` }}
+                className="rounded-2xl p-6 border transition-all duration-300 cursor-default"
+                style={{ background: C.bg, border: `1px solid ${C.border}` }}
+              >
+                <div className="text-2xl mb-4">{u.icon}</div>
+                <h3 className="text-sm font-semibold text-white mb-2">{u.title}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{u.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -1033,744 +927,631 @@ function HomePage() {
 
       <TestimonialsSection />
       <FinalCTABand
-        title="Ready to turn AI risk into a competitive advantage?"
-        sub="Join hundreds of SMBs who govern AI with confidence. Start free, scale as you grow."
+        title="Operationalize AI securely."
+        sub="Start building enterprise AI systems your organization can trust, govern, and scale from day one."
       />
     </motion.div>
   );
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// PAGE: PLATFORM
+// PLATFORM PAGE
 // ══════════════════════════════════════════════════════════════════════════════
 
 function PlatformPage() {
-  const modules = [
-    { icon: LayoutDashboard, title: "Compliance Workspace",  accent: C.teal,   features: ["Centralized GDPR/DPDPA/ISO 42001 obligations mapped to AI use cases", "Dynamic readiness score per regulation", "Control library with pre-mapped tasks, owners, and evidence", "Automated gap analysis with remediation suggestions"] },
-    { icon: Database,        title: "AI Use Case Register",  accent: C.gold,   features: ["Inventory all AI and GenAI implementations across teams", "Risk rating (Low/Medium/High) with rationale", "Links to DPIA/impact assessments and policies", "Always-on updates as AI usage evolves"] },
-    { icon: GitBranch,       title: "Data & Consent Flows",  accent: C.violet, features: ["Data mapping: collection, processing, storage, sharing", "Consent and privacy notices registry", "Out-of-the-box templates for SMB websites and apps", "Cross-border data transfer tracking"] },
-    { icon: FileText,        title: "Policy & Evidence Hub", accent: "#34D399", features: ["Store AI, security, and privacy policies in one place", "Track training status, attestations, and sign-offs", "Exportable audit reports (PDF/CSV)", "Version control and change history"] },
+  const capabilities = [
+    { icon: Rocket, title: "AI Adoption Infrastructure", color: C.accent, features: ["Deploy copilots and assistants into real workflows", "Secure enterprise knowledge retrieval (RAG)", "Multi-model orchestration across teams", "Policy-aware agent execution"] },
+    { icon: ShieldCheck, title: "Governance & Policy Controls", color: C.teal, features: ["Role-based access control (RBAC)", "Approval workflows for AI interactions", "Central policy engine and rule management", "Compliance alignment for GDPR, DPDP, SOC 2"] },
+    { icon: Lock, title: "Enterprise Security Layer", color: C.gold, features: ["Sensitive data detection and masking", "Secure inference boundaries", "Internal knowledge protection", "Cross-boundary data controls"] },
+    { icon: Eye, title: "AI Operations Infrastructure", color: C.coral, features: ["Real-time observability and monitoring", "Agent lifecycle management", "Integration hub for enterprise systems", "Usage analytics and audit trails"] },
   ];
 
-  const tableRows = [
-    { area: "GDPR / DPDPA", need: "Structured readiness view",         feature: "Guided assessments, gap analysis" },
-    { area: "ISO 42001",    need: "AI & GenAI governance",              feature: "Mapped controls and evidence tasks" },
-    { area: "Data privacy", need: "Map data and notices",               feature: "Data flow builder, templates" },
-    { area: "Reporting",    need: "Show compliance to clients/auditors", feature: "One-click PDF and CSV exports" },
-  ];
-
-  const integrations = ["Google Workspace","Microsoft 365","Slack","Jira","GitHub","Salesforce","HubSpot","Notion"];
-
-  const [modRef, modInView]     = useScrollReveal();
-  const [tableRef, tableInView] = useScrollReveal();
-  const [intRef, intInView]     = useScrollReveal();
+  const [ref, inView] = useScrollReveal();
 
   return (
     <motion.div {...PAGE_TRANSITION}>
       <PageHero
-        eyebrow="Saola AI Platform"
-        title="One platform for AI-era privacy and compliance."
-        sub="Operationalize GDPR, DPDPA, ISO 42001 and emerging AI governance obligations—without hiring a large team."
+        eyebrow="Platform Overview"
+        title="The enterprise layer for governed AI adoption."
+        sub="Saola provides the end-to-end infrastructure organizations need to move AI out of pilots and into production — with governance, security, and operational control built in."
         cta1={{ label: "Book a Demo", href: ROUTES.pricing }}
-        cta2={{ label: "Download Feature Sheet", href: "#", icon: Download }}
+        cta2={{ label: "See Use Cases", href: ROUTES.usecases }}
       />
+
       <StatsBand stats={[
-        { val: "4",       label: "Compliance frameworks" },
-        { val: "30d",     label: "Typical onboarding timeline" },
-        { val: "94%",     label: "Avg GDPR readiness improvement" },
-        { val: "1-click", label: "Audit report generation" },
+        { val: "4×", label: "Faster AI deployment" },
+        { val: "100%", label: "Governed by default" },
+        { val: "60%", label: "Shadow AI reduction" },
+        { val: "99.9%", label: "Platform uptime SLA" },
       ]} />
 
-      <section className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-7xl mx-auto px-6" ref={modRef}>
-          <SectionHead label="Core modules" title="Everything compliance in one workspace"
-            sub="Structured modules to map obligations, data flows, policy, and audit evidence." />
-          <div className="grid md:grid-cols-2 gap-5">
-            {modules.map((m, i) => <FeatureCard key={i} {...m} custom={i} inView={modInView} />)}
-          </div>
-        </div>
-      </section>
-
       <section className="py-24" style={{ background: C.surface }}>
-        <div className="max-w-7xl mx-auto px-6" ref={tableRef}>
-          <SectionHead label="Capability map" title="What you get, mapped to your needs" />
-          <motion.div custom={0} variants={fadeUp} initial="hidden" animate={tableInView ? "visible" : "hidden"}
-            className="rounded-2xl overflow-hidden border" style={{ border: `1px solid ${C.border}` }}>
-            <table className="w-full text-sm">
-              <thead>
-                <tr style={{ background: C.surface2 }}>
-                  {["Area", "SMB need", "Platform feature"].map(h => (
-                    <th key={h} className="text-left px-6 py-4 text-xs font-bold uppercase tracking-widest"
-                      style={{ color: C.muted, borderBottom: `1px solid ${C.border}` }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {tableRows.map((r, i) => (
-                  <tr key={i} style={{ background: i % 2 === 0 ? C.bg : C.surface }}>
-                    <td className="px-6 py-4 font-semibold" style={{ color: C.teal, borderBottom: `1px solid ${C.border}` }}>{r.area}</td>
-                    <td className="px-6 py-4" style={{ color: C.muted2, borderBottom: `1px solid ${C.border}` }}>{r.need}</td>
-                    <td className="px-6 py-4" style={{ color: C.textDim, borderBottom: `1px solid ${C.border}` }}>{r.feature}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-7xl mx-auto px-6" ref={intRef}>
-          <SectionHead label="Integrations" title="Connect with what you already use"
-            sub="Sync evidence and use cases automatically from your existing tools." />
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {integrations.map((name, i) => (
-              <motion.div key={i} custom={i} variants={scaleIn} initial="hidden" animate={intInView ? "visible" : "hidden"}
-                whileHover={{ y: -3, borderColor: "rgba(0,229,204,0.2)" }}
-                className="p-4 rounded-xl border text-center text-sm font-medium transition-all duration-300"
-                style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.muted2 }}>
-                <Link2 size={16} className="mx-auto mb-2" style={{ color: C.teal }} />
-                {name}
-              </motion.div>
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHead
+            label="Core capabilities"
+            title="Everything you need to deploy AI at enterprise scale."
+            sub="Four integrated capability layers that work together as a unified platform — not a patchwork of tools."
+          />
+          <div className="grid md:grid-cols-2 gap-5" ref={ref}>
+            {capabilities.map((c, i) => (
+              <FeatureCard key={i} icon={c.icon} title={c.title} accent={c.color} features={c.features} custom={i} inView={inView} />
             ))}
           </div>
         </div>
       </section>
-      <FinalCTABand title="See the platform in action." sub="Book a 30-minute live demo with an AI compliance expert." />
-    </motion.div>
-  );
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// PAGE: AI SECURITY TOOLS
-// ══════════════════════════════════════════════════════════════════════════════
-
-function AISecurityPage() {
-  const tools = [
-    { icon: ScanLine, title: "Prompt & Data Guard",   accent: C.teal,   features: ["Enforce rules on what data can be sent to external LLMs", "PII/PHI detection and masking in real-time", "Policy-based blocking or redaction workflows", "Audit log of all prompt interactions"] },
-    { icon: KeyRound,  title: "Model Access Control",  accent: C.gold,   features: ["Role-based access to AI tools and APIs", "Logging and monitoring of sensitive AI operations", "Anomaly alerts for unusual usage patterns", "SSO and MFA integration support"] },
-    { icon: PieChart,  title: "AI Risk Dashboard",     accent: C.violet, features: ["Unified risk view by use case, team, and data type", "Integration with the AI Use Case Register", "Exportable risk reports for management and auditors", "Trend analysis and risk trajectory charts"] },
-  ];
-
-  const archRows = [
-    { icon: Users,       label: "User / Application",   cls: "",         tag: null,        color: C.muted2 },
-    { icon: ScanLine,    label: "Prompt & Data Guard",  cls: "protected",tag: "Protected", color: C.teal },
-    { icon: KeyRound,    label: "Model Access Control", cls: "gold-p",   tag: "Protected", color: C.gold },
-    { icon: Cpu,         label: "LLM / AI Model",       cls: "",         tag: null,        color: C.muted2 },
-    { icon: PieChart,    label: "AI Risk Dashboard",    cls: "violet-p", tag: "Protected", color: C.violet },
-    { icon: ShieldCheck, label: "Compliance Workspace", cls: "teal-p",   tag: "Monitored", color: C.teal },
-  ];
-
-  const scenario = [
-    { step: "01", text: "Sales team drafts proposals using GenAI, accidentally including client PII in prompts.", prob: true },
-    { step: "02", text: "Without controls, sensitive data leaks to third-party LLMs. No audit trail. DPDPA violation risk.", prob: true },
-    { step: "03", text: "With Saola: Policies block sensitive fields, mask PII, and log all interactions automatically.", prob: false },
-    { step: "04", text: "Compliance workspace auto-registers the use case, maps controls, and generates evidence.", prob: false },
-  ];
-
-  const [toolRef, toolInView] = useScrollReveal();
-  const [scenRef, scenInView] = useScrollReveal();
-
-  return (
-    <motion.div {...PAGE_TRANSITION}>
-      <PageHero
-        eyebrow="AI Security Tools"
-        title="Secure your AI and GenAI before attackers or auditors arrive."
-        sub="Policy-driven controls that protect prompts, data, and AI outputs across your entire stack."
-        cta1={{ label: "Book a Demo", href: ROUTES.pricing }}
-        cta2={{ label: "See how it works", href: "#scenario", icon: ChevronRight }}
-      />
 
       <section className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-7xl mx-auto px-6" ref={toolRef}>
-          <SectionHead label="Tool clusters" title="Three layers of AI security"
-            sub="Layer-by-layer protection from prompt to model to output." />
-          <div className="grid lg:grid-cols-3 gap-5">
-            {tools.map((t, i) => <FeatureCard key={i} {...t} custom={i} inView={toolInView} />)}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24" style={{ background: C.surface }}>
         <div className="max-w-7xl mx-auto px-6">
-          <SectionHead label="Architecture" title="Security built into every layer" center maxW="max-w-xl" />
-          <div style={{ maxWidth: 480, margin: "0 auto" }}>
-            {archRows.map((row, i) => (
-              <div key={i}>
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-4 px-5 py-4 rounded-xl border mb-1"
-                  style={{
-                    background: row.tag ? `${row.color}08` : C.surface2,
-                    border: `1px solid ${row.tag ? `${row.color}30` : C.border}`,
-                  }}
-                >
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ background: `${row.color}18` }}>
-                    <row.icon size={15} style={{ color: row.color }} />
+          <SectionHead
+            label="Architecture"
+            title="How Saola connects your enterprise."
+            sub="A unified control plane that connects your data, policy layer, AI models, and operations in one governed system."
+          />
+          <div className="rounded-2xl border p-8" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { label: "Data & Knowledge Sources", items: ["Documents & files", "APIs & databases", "Internal knowledge bases", "Third-party integrations"], icon: Database },
+                { label: "Saola Control Plane", items: ["Policy enforcement engine", "Access & identity controls", "Orchestration layer", "Audit & compliance logging"], icon: Cpu, highlight: true },
+                { label: "AI Outputs & Operations", items: ["Copilots & assistants", "Autonomous agents", "Workflow automation", "Observability dashboards"], icon: BarChart3 },
+              ].map((col, i) => {
+                const Icon = col.icon;
+                return (
+                  <div key={i} className="rounded-xl p-6 border"
+                    style={{ background: col.highlight ? C.accent : C.surface2, border: `1px solid ${col.highlight ? C.accent : C.border}` }}>
+                    <Icon size={20} style={{ color: col.highlight ? "#fff" : C.accentLight }} className="mb-3" />
+                    <h3 className="text-sm font-bold mb-3" style={{ color: col.highlight ? "#fff" : C.text }}>{col.label}</h3>
+                    <ul className="space-y-2">
+                      {col.items.map((item, j) => (
+                        <li key={j} className="text-xs flex items-center gap-2"
+                          style={{ color: col.highlight ? "rgba(255,255,255,0.75)" : C.muted }}>
+                          <CheckCircle2 size={10} style={{ color: col.highlight ? "rgba(255,255,255,0.6)" : C.accentLight }} />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <span className="font-medium text-sm flex-1"
-                    style={{ color: row.tag ? C.text : C.muted2 }}>{row.label}</span>
-                  {row.tag && (
-                    <span className="text-xs font-bold px-2 py-0.5 rounded"
-                      style={{ background: `${row.color}14`, color: row.color }}>{row.tag}</span>
-                  )}
-                </motion.div>
-                {i < archRows.length - 1 && (
-                  <div style={{ width: 2, height: 14, background: C.border2, margin: "0 auto 4px" }} />
-                )}
-              </div>
-            ))}
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="scenario" className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-7xl mx-auto px-6" ref={scenRef}>
-          <SectionHead label="Example scenario" title="How Saola prevents prompt data leaks"
-            sub="A real-world example from an Indian SMB sales team." />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {scenario.map((s, i) => (
-              <motion.div key={i} custom={i} variants={fadeUp} initial="hidden" animate={scenInView ? "visible" : "hidden"}
-                className="p-5 rounded-2xl border"
-                style={{
-                  background: s.prob ? "rgba(248,113,113,0.04)" : "rgba(0,229,204,0.04)",
-                  border: `1px solid ${s.prob ? "rgba(248,113,113,0.2)" : "rgba(0,229,204,0.2)"}`,
-                }}>
-                <span className="text-xs font-bold" style={{ color: s.prob ? C.coral : C.teal }}>{s.step}</span>
-                <p className="text-sm mt-2 leading-relaxed" style={{ color: C.textDim }}>{s.text}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <FinalCTABand title="Start securing your AI stack today." sub="Get a free assessment of your current AI security posture." />
+      <TestimonialsSection />
+      <FinalCTABand
+        title="Ready to see the full platform?"
+        sub="Book a 30-minute technical walkthrough with our enterprise team."
+      />
     </motion.div>
   );
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// PAGE: SERVICES
+// GOVERNANCE PAGE
 // ══════════════════════════════════════════════════════════════════════════════
 
-function ServiceCards({ items, cols, refEl, inViewState }) {
-  return (
-    <div ref={refEl} className={`grid ${cols} gap-5`}>
-      {items.map((c, i) => (
-        <FeatureCard
-          key={i}
-          icon={c.icon}
-          title={c.title}
-          features={c.bullets}
-          accent={c.accent}
-          custom={i}
-          inView={inViewState}
-        />
-      ))}
-    </div>
-  );
-}
-
-function ServicesPage() {
-  const [tab, setTab] = useState("consulting");
-
-  const consulting = [
-    { icon: Target,     title: "AI Governance Design",       accent: C.teal,   desc: "Map your AI lifecycle to NIST AI RMF. Define roles, processes, and risk assessment criteria.", bullets: ["NIST AI RMF based policy and control framework", "Risk assessments for priority use cases", "Ethical AI principles and accountability structures"] },
-    { icon: ShieldCheck,title: "Privacy & Compliance Advisory", accent: C.gold, desc: "GDPR, DPDPA, ISO 42001 implementation roadmaps with hands-on execution support.", bullets: ["GDPR/DPDPA gap analysis and remediation planning", "ISO 42001 policy and evidence path", "AI-specific DPIAs and vendor risk reviews"] },
-    { icon: GitBranch,  title: "AI Security Architecture",   accent: C.violet, desc: "Secure AI deployment patterns on cloud with data, identity, and monitoring controls.", bullets: ["Secure AI access control and data flow protections", "Monitoring and alerting implementation", "Incident response playbooks for AI misuse"] },
+function GovernancePage() {
+  const [ref, inView] = useScrollReveal();
+  const controls = [
+    { icon: KeyRound, title: "Role-Based Access Control", color: C.accent, features: ["Fine-grained permission management", "Team and department-level policies", "Identity provider integrations (SSO)", "Least-privilege AI access enforcement"] },
+    { icon: FileText, title: "Policy Engine", color: C.teal, features: ["Centralized rule definition and versioning", "Automated approval workflows", "Contextual policy enforcement at inference time", "Cross-geography data handling rules"] },
+    { icon: Eye, title: "Audit & Compliance", color: C.gold, features: ["Complete audit trails for every AI interaction", "Immutable logs with tamper detection", "Compliance reports for GDPR, DPDP, SOC 2", "Regulator-ready data exports"] },
+    { icon: Bell, title: "Risk & Monitoring", color: C.coral, features: ["Real-time policy violation alerts", "Shadow AI detection and flagging", "Usage anomaly detection", "Executive risk dashboards"] },
   ];
-
-  const training = [
-    { icon: Briefcase,    title: "Leadership Track",        accent: C.teal,   desc: "Strategic overview for founders, boards, and senior leaders.", bullets: ["AI risk overview and governance responsibilities", "Audit readiness and regulator engagement", "Building AI governance culture across the org"] },
-    { icon: Code2,        title: "Technical Track",         accent: C.gold,   desc: "Hands-on upskilling for engineers and security professionals.", bullets: ["Secure AI/GenAI implementation patterns", "Threat modeling for generative AI systems", "Incident response for model misuse events"] },
-    { icon: FileCheck,    title: "Compliance & Legal Track",accent: C.violet, desc: "Deep-dive for DPOs, legal, and compliance professionals.", bullets: ["AI policies, DPIAs, and contract implications", "Impact on privacy notices and consent flows", "Regulatory landscape: GDPR, DPDPA, EU AI Act"] },
-    { icon: Users,        title: "All-Hands Awareness",     accent: "#34D399", desc: "Short, engaging modules for every employee who uses AI tools.", bullets: ["Safe AI use for everyday business tools", "Spotting and reporting AI misuse", "Data hygiene when working with AI systems"] },
-  ];
-
-  const [consRef, consInView]   = useScrollReveal();
-  const [trainRef, trainInView] = useScrollReveal();
-
 
   return (
     <motion.div {...PAGE_TRANSITION}>
       <PageHero
-        eyebrow="Consulting & Training"
-        title="Expert guidance to design your AI governance program."
-        sub="Hands-on advisory and role-based training that actually moves the needle on AI security and compliance."
-        cta1={{ label: "Request a Proposal", href: ROUTES.pricing }}
-        cta2={{ label: "View training tracks", href: "#training", icon: GraduationCap }}
+        eyebrow="Governance & Policy Controls"
+        title="Governance built in, not bolted on."
+        sub="Make AI deployment controllable across your organization. Centralized policy enforcement, approval flows, and audit trails that scale from one team to the entire enterprise."
+        cta1={{ label: "See Platform", href: ROUTES.platform }}
+        cta2={{ label: "Book a Demo", href: ROUTES.pricing }}
       />
+
+      <section className="py-24" style={{ background: C.surface }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHead
+            label="Governance capabilities"
+            title="Every AI interaction, under control."
+            sub="Saola's governance layer sits between your enterprise systems and every AI output — enforcing policy at the point of inference."
+          />
+          <div className="grid md:grid-cols-2 gap-5" ref={ref}>
+            {controls.map((c, i) => (
+              <FeatureCard key={i} icon={c.icon} title={c.title} accent={c.color} features={c.features} custom={i} inView={inView} />
+            ))}
+          </div>
+        </div>
+      </section>
 
       <section className="py-24" style={{ background: C.bg }}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex gap-1 p-1 rounded-xl w-fit mb-12 mx-auto" style={{ background: C.surface }}>
-            {[{ id: "consulting", label: "Consulting" }, { id: "training", label: "Training" }].map(t => (
-              <button key={t.id} onClick={() => setTab(t.id)}
-                className="px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200"
-                style={{ background: tab === t.id ? C.teal : "transparent", color: tab === t.id ? "#030712" : C.muted2 }}>
-                {t.label}
-              </button>
+          <SectionHead
+            label="Compliance alignment"
+            title="Built for regulated industries."
+            sub="Governance controls designed to meet the requirements of enterprise compliance frameworks."
+          />
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              { label: "GDPR", desc: "Data residency controls, right-to-erasure support, cross-border data handling policy enforcement." },
+              { label: "DPDP Act", desc: "India's Digital Personal Data Protection Act compliance with granular consent and data principal controls." },
+              { label: "SOC 2 Type II", desc: "Audit-ready evidence generation, access control logging, and continuous monitoring for trust service criteria." },
+              { label: "ISO 27001", desc: "Information security management controls aligned with international enterprise security standards." },
+              { label: "HIPAA", desc: "Healthcare data handling controls, PHI access governance, and audit trail requirements." },
+              { label: "Custom Frameworks", desc: "Extend Saola's policy engine with organization-specific controls and compliance rules." },
+            ].map((f, i) => (
+              <motion.div
+                key={i} custom={i} variants={fadeUp} initial="hidden" animate="visible"
+                className="rounded-xl p-6 border"
+                style={{ background: C.surface, border: `1px solid ${C.border}` }}
+              >
+                <Pill color={C.accent}>{f.label}</Pill>
+                <p className="text-sm mt-3 leading-relaxed" style={{ color: C.muted }}>{f.desc}</p>
+              </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <AnimatePresence mode="wait">
-            {tab === "consulting" && (
-              <motion.div key="consulting"
-                initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.3 }}>
-                <ServiceCards items={consulting} cols="lg:grid-cols-3" refEl={consRef} inViewState={consInView} />
-                <div className="mt-6 rounded-2xl p-8 border" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-                  <p className="text-sm font-semibold mb-6 text-center" style={{ color: C.muted }}>Our consulting process</p>
-                  <div className="grid grid-cols-4 gap-4">
-                    {["Assess", "Design", "Implement", "Review"].map((p, i) => (
-                      <div key={i} className="text-center">
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 text-sm font-bold"
-                          style={{ background: `${C.teal}18`, color: C.teal }}>{i + 1}</div>
-                        <p className="text-sm font-semibold text-white">{p}</p>
-                      </div>
+      <FinalCTABand
+        title="Make every AI interaction governable."
+        sub="Start with one use case and extend governance controls across your entire organization."
+      />
+    </motion.div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// USE CASES PAGE
+// ══════════════════════════════════════════════════════════════════════════════
+
+function UseCasesPage() {
+  const cases = [
+    {
+      icon: "💬", title: "Internal AI Assistants", color: C.accent,
+      desc: "Deploy policy-aware copilots that answer employee questions using secure enterprise knowledge bases.",
+      outcomes: ["Reduce support ticket volume by 40%", "Consistent answers grounded in enterprise policy", "Full audit trail on every interaction"],
+      buyers: ["HR leaders", "IT operations", "CIOs"],
+    },
+    {
+      icon: "🔍", title: "Secure Enterprise Search", color: C.teal,
+      desc: "Unified AI search across documents, databases, and systems with access controls enforced at every retrieval step.",
+      outcomes: ["Surface institutional knowledge instantly", "Data boundary controls enforced at retrieval", "Cross-system search with governance built in"],
+      buyers: ["Knowledge managers", "Platform teams", "CTOs"],
+    },
+    {
+      icon: "⚡", title: "Workflow Automation", color: C.gold,
+      desc: "AI-powered operations that route, process, and action enterprise tasks without the risk of shadow tooling.",
+      outcomes: ["Automate multi-step processes end to end", "Policy enforcement at every step", "Observable, auditable automation pipelines"],
+      buyers: ["Operations leaders", "Business transformation teams"],
+    },
+    {
+      icon: "🤖", title: "AI Agent Deployment", color: C.coral,
+      desc: "Orchestrate multi-step autonomous agents with governance rails, observability, and full audit trails at every execution stage.",
+      outcomes: ["Governed agent execution at scale", "Human-in-the-loop controls where required", "Agent lifecycle management and versioning"],
+      buyers: ["Chief AI Officers", "Platform engineering", "CTOs"],
+    },
+    {
+      icon: "📋", title: "Compliance-Sensitive AI", color: C.accent,
+      desc: "Run AI in regulated environments — financial services, healthcare, legal — with data controls and compliance-ready audit trails.",
+      outcomes: ["Meets GDPR, DPDP, SOC 2, HIPAA controls", "Regulator-ready evidence generation", "Sensitive data masking at inference time"],
+      buyers: ["CISOs", "Compliance leaders", "Risk officers"],
+    },
+    {
+      icon: "🧠", title: "Knowledge Intelligence", color: C.teal,
+      desc: "Surface institutional knowledge through secure RAG pipelines that respect data boundaries and access policies.",
+      outcomes: ["Unlock knowledge trapped across systems", "Context-aware retrieval with policy enforcement", "Reduces knowledge loss from team turnover"],
+      buyers: ["CKOs", "Platform teams", "Operations leaders"],
+    },
+  ];
+
+  return (
+    <motion.div {...PAGE_TRANSITION}>
+      <PageHero
+        eyebrow="Use Cases"
+        title="From pilots to production workflows."
+        sub="Real operational use cases enterprises deploy on Saola today — from internal assistants to governed agent networks."
+        cta1={{ label: "Book a Demo", href: ROUTES.pricing }}
+        cta2={{ label: "See Platform", href: ROUTES.platform }}
+      />
+
+      <section className="py-24" style={{ background: C.surface }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHead
+            label="Enterprise use cases"
+            title="AI across every function, under control."
+            sub="Organize by business problem, not feature. Each use case maps directly to an enterprise outcome."
+          />
+          <div className="grid md:grid-cols-2 gap-6">
+            {cases.map((c, i) => (
+              <motion.div
+                key={i} custom={i} variants={fadeUp} initial="hidden" animate="visible"
+                whileHover={{ y: -4 }}
+                className="rounded-2xl p-7 border transition-all duration-300"
+                style={{ background: C.bg, border: `1px solid ${C.border}` }}
+              >
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="text-2xl">{c.icon}</div>
+                  <div>
+                    <Pill color={c.color}>{c.title}</Pill>
+                    <p className="text-sm mt-2 leading-relaxed" style={{ color: C.muted2 }}>{c.desc}</p>
+                  </div>
+                </div>
+                <div className="border-t pt-4" style={{ borderColor: C.border }}>
+                  <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: C.muted }}>Outcomes</p>
+                  <ul className="space-y-1.5 mb-4">
+                    {c.outcomes.map((o, j) => (
+                      <li key={j} className="flex items-start gap-2 text-xs" style={{ color: C.textDim }}>
+                        <CheckCircle2 size={11} className="mt-0.5 shrink-0" style={{ color: c.color }} />
+                        {o}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-wrap gap-1.5">
+                    {c.buyers.map((b, j) => (
+                      <span key={j} className="text-[11px] px-2 py-0.5 rounded" style={{ background: C.surface2, color: C.muted2 }}>{b}</span>
                     ))}
                   </div>
                 </div>
               </motion.div>
-            )}
-            {tab === "training" && (
-              <motion.div key="training" id="training"
-                initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.3 }}>
-                <ServiceCards items={training} cols="md:grid-cols-2" refEl={trainRef} inViewState={trainInView} />
-                <p className="text-center mt-8 text-sm" style={{ color: C.muted }}>
-                  Available as on-site, remote live workshops, or self-paced modules.
-                </p>
-              </motion.div>
-            )}
-          </AnimatePresence>
+            ))}
+          </div>
         </div>
       </section>
-      <FinalCTABand title="Build AI expertise across your entire team." sub="Custom training programs tailored to your industry and AI stack." />
+
+      <FinalCTABand
+        title="See your use case in action."
+        sub="Book a 30-minute walkthrough specific to your industry and function."
+      />
     </motion.div>
   );
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// PAGE: PRICING
+// SECURITY PAGE
+// ══════════════════════════════════════════════════════════════════════════════
+
+function SecurityPage() {
+  const [ref, inView] = useScrollReveal();
+  const layers = [
+    { icon: Lock, title: "Data Privacy Controls", color: C.accent, features: ["Sensitive data detection at inference time", "PII masking and anonymization pipelines", "Data residency and sovereignty controls", "Consent management integration"] },
+    { icon: ShieldCheck, title: "Secure Inference Layer", color: C.teal, features: ["Isolated inference environments per tenant", "Model input/output filtering", "Prompt injection detection", "Secure enterprise knowledge access"] },
+    { icon: KeyRound, title: "Identity & Access", color: C.gold, features: ["Enterprise SSO integration (SAML, OIDC)", "Zero-trust access model for AI systems", "Privileged access management for AI agents", "Session-level monitoring and controls"] },
+    { icon: Eye, title: "Threat Detection", color: C.coral, features: ["Shadow AI detection across the organization", "Anomalous usage pattern alerting", "Data exfiltration risk monitoring", "Continuous policy compliance checking"] },
+  ];
+
+  return (
+    <motion.div {...PAGE_TRANSITION}>
+      <PageHero
+        eyebrow="Enterprise Security"
+        title="Security as a trust layer for AI deployment."
+        sub="Protect enterprise data and knowledge across every AI interaction — without slowing down adoption. Security that enables, not just controls."
+        cta1={{ label: "See Platform", href: ROUTES.platform }}
+        cta2={{ label: "Book a Demo", href: ROUTES.pricing }}
+      />
+
+      <section className="py-24" style={{ background: C.surface }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionHead
+            label="Security capabilities"
+            title="Enterprise-grade security without friction."
+            sub="Saola positions security as the trust layer that makes AI adoption possible — not the barrier that prevents it."
+          />
+          <div className="grid md:grid-cols-2 gap-5" ref={ref}>
+            {layers.map((l, i) => (
+              <FeatureCard key={i} icon={l.icon} title={l.title} accent={l.color} features={l.features} custom={i} inView={inView} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24" style={{ background: C.bg }}>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <SectionLabel>Our approach</SectionLabel>
+              <h2 className="text-3xl font-bold text-white mb-4 leading-tight">
+                Security enables adoption.<br />Not the other way around.
+              </h2>
+              <p className="mb-6 leading-relaxed" style={{ color: C.muted2 }}>
+                The old model treats AI security as a gate — something that slows deployment and restricts teams. Saola inverts this: security controls are embedded in the platform so enterprises can deploy AI faster, not slower.
+              </p>
+              <ul className="space-y-3">
+                {[
+                  "Security enforced at infrastructure level, not policy layer",
+                  "No performance overhead on AI inference pipelines",
+                  "Controls that scale automatically as adoption grows",
+                  "Security posture improves as more teams adopt the platform",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-sm" style={{ color: C.textDim }}>
+                    <CheckCircle2 size={14} className="mt-0.5 shrink-0" style={{ color: C.accent }} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="rounded-2xl p-8 border" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
+              <p className="text-xs font-bold uppercase tracking-widest mb-6" style={{ color: C.muted }}>Language shift</p>
+              <div className="space-y-4">
+                {[
+                  { from: "AI Security", to: "Enterprise AI Infrastructure" },
+                  { from: "Compliance", to: "Operational Governance" },
+                  { from: "Privacy Protection", to: "Secure Organizational Intelligence" },
+                  { from: "AI Monitoring", to: "AI Operations Control" },
+                  { from: "Risk Detection", to: "AI Deployment Assurance" },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="text-xs px-2.5 py-1 rounded line-through" style={{ background: C.coralFaint, color: C.coral }}>{item.from}</span>
+                    <ArrowRight size={12} style={{ color: C.muted }} />
+                    <span className="text-xs px-2.5 py-1 rounded" style={{ background: C.accentFaint, color: C.accentLight }}>{item.to}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <FinalCTABand
+        title="Security that accelerates AI adoption."
+        sub="See how Saola's security layer makes enterprise AI deployment faster, not slower."
+      />
+    </motion.div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// PRICING PAGE
 // ══════════════════════════════════════════════════════════════════════════════
 
 function PricingPage() {
-  const [annual, setAnnual] = useState(true);
-  const [openFaq, setOpenFaq] = useState(null);
-
-  const tiers = [
-    { name: "Starter", desc: "For small teams getting started with AI governance.", monthlyINR: 4999,  monthlyUSD: 59,  primary: false, cta: "Start Free Trial", features: ["Up to 10 employees", "5 AI use cases", "Core compliance workspace (GDPR, DPDPA lite)", "Basic AI Use Case Register", "Email support"] },
-    { name: "Growth",  desc: "For scaling SMBs with multiple AI initiatives.",      monthlyINR: 14999, monthlyUSD: 179, primary: true,  cta: "Start Free Trial", badge: "Most Popular", features: ["Up to 50 employees", "Unlimited AI use cases", "Everything in Starter", "ISO 42001 module", "AI Security Tools (Prompt & Data Guard)", "Policy & Evidence Hub", "Email + chat support"] },
-    { name: "Scale",   desc: "For larger or regulated organizations.",              monthlyINR: 39999, monthlyUSD: 479, primary: false, cta: "Talk to Sales",    features: ["Unlimited employees", "Everything in Growth", "Advanced AI Security Tools", "Custom workflows & SSO", "Audit exports & integrations", "Priority support + dedicated CSM"] },
+  const plans = [
+    {
+      name: "Starter",
+      price: "Custom",
+      desc: "For teams beginning their governed AI journey.",
+      features: ["Up to 5 AI workflows", "Basic policy controls & RBAC", "Audit trail & compliance logging", "2 enterprise system integrations", "Email support"],
+      cta: "Book a Demo",
+      highlight: false,
+    },
+    {
+      name: "Enterprise",
+      price: "Custom",
+      desc: "For organizations deploying AI at scale with full governance.",
+      features: ["Unlimited AI workflows & agents", "Advanced policy engine & approval flows", "Full compliance suite (GDPR, DPDP, SOC 2)", "Unlimited system integrations", "Real-time observability & risk dashboards", "Dedicated enterprise success manager", "Custom SLA"],
+      cta: "Book a Demo",
+      highlight: true,
+    },
+    {
+      name: "Managed",
+      price: "Custom",
+      desc: "Full-service AI adoption with Saola's enterprise team.",
+      features: ["Everything in Enterprise", "Hands-on deployment and integration", "Custom workflow and agent development", "Quarterly business reviews", "Strategic AI adoption consulting"],
+      cta: "Talk to an Expert",
+      highlight: false,
+    },
   ];
-
-  const faqs = [
-    { q: "Can I start with Platform only and add consulting later?",   a: "Absolutely. Our platform and consulting services are independent. Most clients start with the platform and add advisory engagements as their program matures." },
-    { q: "Do you offer discounts for annual billing?",                 a: "Yes—annual plans include a 20% discount versus monthly billing. We also offer special pricing for early-stage startups and NGOs." },
-    { q: "What if I'm just experimenting with AI?",                    a: "The Starter plan is free to trial for 30 days, no credit card required. It covers the essentials for most teams at the exploration stage." },
-    { q: "How does consulting pricing work?",                          a: "Consulting is priced separately, starting from ₹25,000/day or as packaged engagements. Request a proposal for a custom quote." },
-  ];
-
-  const disc = annual ? 0.8 : 1;
-  const [tierRef, tierInView] = useScrollReveal();
-  const [faqRef, faqInView]   = useScrollReveal();
 
   return (
     <motion.div {...PAGE_TRANSITION}>
       <PageHero
         eyebrow="Pricing"
-        title="Simple, transparent pricing for every stage."
-        sub="Start free. Scale as you grow. No surprise costs."
-        noOrbs
+        title="Infrastructure pricing, not SaaS subscriptions."
+        sub="Saola is priced as the enterprise infrastructure layer it is — scaled to your organization's AI adoption journey."
+        cta1={{ label: "Book a Demo", href: "#contact" }}
+        cta2={{ label: "See Platform", href: ROUTES.platform }}
       />
 
-      <div className="flex justify-center py-8" style={{ background: C.bg }}>
-        <div className="flex items-center gap-4">
-          <span className="text-sm" style={{ color: annual ? C.muted : C.text }}>Monthly</span>
-          <button
-            onClick={() => setAnnual(v => !v)}
-            className="relative w-12 h-6 rounded-full transition-colors duration-200"
-            style={{ background: annual ? C.teal : C.surface2 }}
-          >
-            <motion.div animate={{ x: annual ? 24 : 2 }} className="absolute top-1 w-4 h-4 rounded-full"
-              style={{ background: "#fff" }} />
-          </button>
-          <span className="text-sm" style={{ color: annual ? C.text : C.muted }}>
-            Annual <span className="text-xs ml-1 font-semibold" style={{ color: C.teal }}>Save 20%</span>
-          </span>
-        </div>
-      </div>
-
-      <section className="pb-24" style={{ background: C.bg }}>
-        <div className="max-w-7xl mx-auto px-6" ref={tierRef}>
-          <div className="grid lg:grid-cols-3 gap-5">
-            {tiers.map((tier, i) => (
-              <motion.div key={i} custom={i} variants={fadeUp} initial="hidden" animate={tierInView ? "visible" : "hidden"}
-                whileHover={{ y: -4 }}
-                className="relative rounded-2xl p-7 border flex flex-col transition-all duration-300"
+      <section className="py-24" style={{ background: C.surface }}>
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-5">
+            {plans.map((plan, i) => (
+              <motion.div
+                key={i} custom={i} variants={fadeUp} initial="hidden" animate="visible"
+                className="rounded-2xl p-8 border flex flex-col relative overflow-hidden"
                 style={{
-                  background: tier.primary ? "rgba(0,229,204,0.04)" : C.surface,
-                  border: tier.primary ? "2px solid rgba(0,229,204,0.35)" : `1px solid ${C.border}`,
-                }}>
-                {tier.badge && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                    <span className="text-xs font-bold px-3 py-1 rounded-full"
-                      style={{ background: C.teal, color: "#030712" }}>{tier.badge}</span>
-                  </div>
+                  background: plan.highlight ? C.accent : C.bg,
+                  border: `1px solid ${plan.highlight ? C.accent : C.border}`,
+                }}
+              >
+                {plan.highlight && (
+                  <div className="absolute top-0 inset-x-0 h-0.5" style={{ background: "rgba(255,255,255,0.3)" }} />
                 )}
-                <h3 className="font-bold text-xl text-white mb-1" style={{ fontFamily: "'DM Sans', sans-serif" }}>{tier.name}</h3>
-                <p className="text-sm mb-5" style={{ color: C.muted }}>{tier.desc}</p>
                 <div className="mb-6">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-bold text-white" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                      ₹{Math.round(tier.monthlyINR * disc).toLocaleString("en-IN")}
-                    </span>
-                    <span className="text-sm" style={{ color: C.muted }}>/mo</span>
-                  </div>
-                  <p className="text-xs mt-1" style={{ color: C.muted }}>
-                    ~${Math.round(tier.monthlyUSD * disc)}/mo · {annual ? "billed annually" : "billed monthly"}
-                  </p>
+                  <Pill
+                    color={plan.highlight ? C.accent : C.accentLight}
+                    bg={plan.highlight ? "rgba(255,255,255,0.2)" : C.accentFaint}
+                  >
+                    {plan.name}
+                  </Pill>
+                  <div className="text-3xl font-bold mt-3 mb-1" style={{ color: plan.highlight ? "#fff" : C.text }}>{plan.price}</div>
+                  <p className="text-sm" style={{ color: plan.highlight ? "rgba(255,255,255,0.7)" : C.muted }}>{plan.desc}</p>
                 </div>
-                <ul className="space-y-3 flex-1 mb-7">
-                  {tier.features.map((f, j) => (
-                    <li key={j} className="flex items-start gap-2.5 text-sm" style={{ color: C.textDim }}>
-                      <CheckCircle2 size={14} className="mt-0.5 shrink-0"
-                        style={{ color: tier.primary ? C.teal : C.muted2 }} />
+                <ul className="space-y-3 flex-1 mb-8">
+                  {plan.features.map((f, j) => (
+                    <li key={j} className="flex items-start gap-2.5 text-sm"
+                      style={{ color: plan.highlight ? "rgba(255,255,255,0.85)" : C.textDim }}>
+                      <CheckCircle2 size={13} className="mt-0.5 shrink-0"
+                        style={{ color: plan.highlight ? "rgba(255,255,255,0.7)" : C.accent }} />
                       {f}
                     </li>
                   ))}
                 </ul>
-                <GlowBtn href="#" primary={tier.primary}>{tier.cta}</GlowBtn>
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div custom={3} variants={fadeUp} initial="hidden" animate={tierInView ? "visible" : "hidden"}
-            className="mt-5 p-6 rounded-2xl border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-            style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <Briefcase size={16} style={{ color: C.gold }} />
-                <h3 className="font-bold text-white">Consulting & Training Add-ons</h3>
-              </div>
-              <p className="text-sm" style={{ color: C.muted }}>
-                From ₹25,000/day or packaged engagements. Custom quotes available for ongoing retainers.
-              </p>
-            </div>
-            <GlowBtn href={ROUTES.services} primary={false} icon={ChevronRight} small>Request a Proposal</GlowBtn>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="py-24" style={{ background: C.surface }}>
-        <div className="max-w-2xl mx-auto px-6" ref={faqRef}>
-          <SectionHead label="FAQ" title="Common questions" center />
-          <div className="space-y-2">
-            {faqs.map((faq, i) => (
-              <motion.div key={i} custom={i} variants={fadeUp} initial="hidden" animate={faqInView ? "visible" : "hidden"}
-                className="rounded-xl border overflow-hidden"
-                style={{ border: `1px solid ${C.border}`, background: C.bg }}>
-                <button
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="w-full flex items-center justify-between p-5 text-left text-sm font-semibold text-white"
+                <motion.button
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full py-3 rounded-xl text-sm font-bold transition-colors"
+                  style={plan.highlight
+                    ? { background: "#fff", color: C.accent }
+                    : { background: C.accent, color: "#fff" }
+                  }
                 >
-                  {faq.q}
-                  <motion.div animate={{ rotate: openFaq === i ? 45 : 0 }} transition={{ duration: 0.2 }}>
-                    <Plus size={16} style={{ color: C.teal }} />
-                  </motion.div>
-                </button>
-                <AnimatePresence>
-                  {openFaq === i && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }}>
-                      <p className="px-5 pb-5 text-sm leading-relaxed" style={{ color: C.muted }}>{faq.a}</p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                  {plan.cta}
+                </motion.button>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-      <FinalCTABand title="Not sure which plan is right?" sub="Talk to us—we'll help you find the best fit for your team." />
+
+      <FinalCTABand
+        title="Not sure which plan fits?"
+        sub="Our enterprise team will map your AI adoption goals to the right deployment model."
+      />
     </motion.div>
   );
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// PAGE: RESOURCES
+// RESOURCES PAGE
 // ══════════════════════════════════════════════════════════════════════════════
 
 function ResourcesPage() {
-  const [filter, setFilter] = useState("All");
-  const filters = ["All", "AI Governance", "Privacy & Compliance", "AI Security", "SMB Guides"];
-
   const posts = [
-    { title: "A practical AI governance checklist for Indian SMBs",          tag: "AI Governance",        type: "Guide",   time: "8 min read",  excerpt: "Step-by-step framework for inventorying AI use cases, assessing risk, and building a governance baseline." },
-    { title: "How to prepare for DPDPA when you use GenAI daily",            tag: "Privacy & Compliance", type: "Blog",    time: "6 min read",  excerpt: "The DPDPA creates specific obligations for businesses using AI tools that process personal data." },
-    { title: "Prompt injection attacks: what SMBs need to know",             tag: "AI Security",          type: "Blog",    time: "5 min read",  excerpt: "A practical overview of prompt injection risks and the controls that prevent them in production AI systems." },
-    { title: "ISO 42001 explained for non-technical leaders",                tag: "AI Governance",        type: "Guide",   time: "10 min read", excerpt: "The new international standard for AI management systems, decoded for founders, CTOs, and compliance leads." },
-    { title: "GDPR and AI: 5 mistakes Indian SaaS companies make",           tag: "Privacy & Compliance", type: "Blog",    time: "7 min read",  excerpt: "EU customers are asking harder questions. Here are the compliance gaps we see most often." },
-    { title: "Building zero-trust AI architecture on a startup budget",      tag: "AI Security",          type: "Webinar", time: "45 min",      excerpt: "Practical security controls for AI pipelines, from prompt to output." },
-    { title: "The SMB founder's guide to AI risk management",                tag: "SMB Guides",           type: "Guide",   time: "12 min read", excerpt: "A non-technical framework for evaluating, prioritizing, and managing AI risks without a dedicated security team." },
-    { title: "Consent flows in the age of AI-powered products",             tag: "Privacy & Compliance", type: "Blog",    time: "6 min read",  excerpt: "How to update your privacy notices and consent mechanisms when your product uses AI to process user data." },
+    { tag: "Guide", title: "Enterprise AI Adoption Playbook: From Pilot to Production", desc: "A step-by-step framework for moving AI initiatives out of experimentation and into governed enterprise workflows.", icon: BookOpen, color: C.accent },
+    { tag: "Report", title: "The State of Enterprise AI Governance 2026", desc: "Research across 200+ enterprise organizations on AI adoption maturity, governance gaps, and deployment blockers.", icon: BarChart3, color: C.teal },
+    { tag: "Webinar", title: "How to Build a Governed AI Adoption Program", desc: "Live session with enterprise AI practitioners on building infrastructure for safe, scalable AI deployment.", icon: Users, color: C.gold },
+    { tag: "Guide", title: "Secure RAG Architecture for Enterprise Knowledge Systems", desc: "Technical guide to deploying retrieval-augmented generation with policy enforcement and data boundary controls.", icon: Database, color: C.coral },
+    { tag: "Case Study", title: "90-Day Enterprise AI Deployment: A Saola Customer Story", desc: "How one enterprise moved from fragmented AI experiments to governed production workflows in three months.", icon: TrendingUp, color: C.accent },
+    { tag: "Guide", title: "AI Governance Checklist for CIOs and CTOs", desc: "The 24-point governance checklist every enterprise leader needs before scaling AI across business functions.", icon: FileText, color: C.teal },
   ];
-
-  const typeColor = { Guide: C.teal, Blog: C.gold, Webinar: C.violet };
-  const shown = filter === "All" ? posts : posts.filter(p => p.tag === filter);
-  const [gridRef, gridInView] = useScrollReveal();
 
   return (
     <motion.div {...PAGE_TRANSITION}>
       <PageHero
         eyebrow="Resources"
-        title="Learn how to govern AI with confidence."
-        sub="Practical guides, deep-dives, and webinars for SMB founders, CTOs, and compliance leads."
+        title="The enterprise AI adoption library."
+        sub="Guides, research, and frameworks for organizations moving AI from experimentation to governed production deployment."
+        cta1={{ label: "Book a Demo", href: ROUTES.pricing }}
+        cta2={{ label: "See Platform", href: ROUTES.platform }}
       />
-      <section className="py-24" style={{ background: C.bg }}>
+
+      <section className="py-24" style={{ background: C.surface }}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-wrap gap-2 mb-12">
-            {filters.map(f => (
-              <button key={f} onClick={() => setFilter(f)}
-                className="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
-                style={{
-                  background: filter === f ? C.teal : C.surface,
-                  color: filter === f ? "#030712" : C.muted2,
-                  border: `1px solid ${filter === f ? C.teal : C.border}`,
-                }}>
-                {f}
-              </button>
-            ))}
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4" ref={gridRef}>
-            {shown.map((post, i) => (
-              <motion.a
-                key={post.title}
-                href="#"
-                custom={i % 4} variants={fadeUp} initial="hidden" animate={gridInView ? "visible" : "hidden"}
-                whileHover={{ y: -4, borderColor: "rgba(0,229,204,0.2)" }}
-                className="flex flex-col p-5 rounded-2xl border transition-all duration-300 group cursor-pointer"
-                style={{ background: C.surface, border: `1px solid ${C.border}` }}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-bold px-2 py-0.5 rounded"
-                    style={{ background: `${typeColor[post.type]}14`, color: typeColor[post.type] }}>
-                    {post.type}
-                  </span>
-                  <span className="text-xs" style={{ color: C.muted }}>{post.time}</span>
-                </div>
-                <h3 className="font-semibold text-white text-sm leading-snug mb-2 flex-1"
-                  style={{ fontFamily: "'DM Sans', sans-serif" }}>{post.title}</h3>
-                <p className="text-xs leading-relaxed mb-4" style={{ color: C.muted }}>{post.excerpt}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs" style={{ color: C.muted }}>{post.tag}</span>
-                  <ArrowUpRight size={14} style={{ color: C.teal }}
-                    className="opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              </motion.a>
-            ))}
+          <SectionHead
+            label="Resources"
+            title="Everything you need to operationalize AI."
+            sub="Practical resources built for enterprise leaders, platform teams, and AI practitioners."
+          />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {posts.map((p, i) => {
+              const Icon = p.icon;
+              return (
+                <motion.div
+                  key={i} custom={i} variants={fadeUp} initial="hidden" animate="visible"
+                  whileHover={{ y: -4, borderColor: `${p.color}40` }}
+                  className="rounded-2xl p-7 border flex flex-col gap-4 cursor-pointer transition-all duration-300"
+                  style={{ background: C.bg, border: `1px solid ${C.border}` }}
+                >
+                  <div className="flex items-center justify-between">
+                    <Pill color={p.color}>{p.tag}</Pill>
+                    <ArrowUpRight size={14} style={{ color: C.muted }} />
+                  </div>
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: `${p.color}14` }}>
+                    <Icon size={16} style={{ color: p.color }} />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-white mb-2 leading-snug">{p.title}</h3>
+                    <p className="text-xs leading-relaxed" style={{ color: C.muted }}>{p.desc}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
-      <FinalCTABand title="Want resources tailored to your sector?" sub="Our team produces custom guides for your industry. Talk to us." />
+
+      <FinalCTABand
+        title="Ready to put AI to work?"
+        sub="Start with a 30-minute enterprise assessment — we'll map your AI adoption journey and show you where to begin."
+      />
     </motion.div>
   );
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// PAGE: ABOUT
+// ABOUT PAGE
 // ══════════════════════════════════════════════════════════════════════════════
 
 function AboutPage() {
-  const values = [
-    { icon: Rocket,    title: "Pragmatic security & privacy",          desc: "We design for real-world teams—not bureaucracies. Every recommendation is actionable." },
-    { icon: Globe,     title: "Civilizational roots, global standards", desc: "Rooted in India's digital economy, aligned to GDPR, NIST, and ISO internationally." },
-    { icon: Lightbulb, title: "Designed for builders",                 desc: "We speak the language of engineers, founders, and product teams—not just compliance officers." },
-    { icon: Shield,    title: "Trust as a competitive edge",           desc: "We believe that trustworthy AI is a market advantage, not just a regulatory burden." },
-  ];
-
   const team = [
-    { name: "Founder & CEO",         role: "10+ years in AI/ML and enterprise security. Previously at a top-4 consulting firm." },
-    { name: "Co-founder & CTO",      role: "Built data privacy infrastructure for a major Indian fintech. CISSP certified." },
-    { name: "Head of Compliance",    role: "Former DPO for a multinational. Expert in GDPR, DPDPA, and ISO 42001." },
-    { name: "Head of AI Security",   role: "Red team lead with specialization in adversarial ML and GenAI threat modeling." },
+    { name: "Founder & CEO", desc: "Enterprise AI strategy and platform vision. Previously at large-scale AI deployment organizations." },
+    { name: "CTO", desc: "Platform architecture and AI infrastructure engineering. Background in enterprise-grade distributed systems." },
+    { name: "VP Governance", desc: "Compliance frameworks, policy engine design, and enterprise risk controls. Former regulatory advisor." },
+    { name: "VP Enterprise", desc: "Customer success, enterprise deployment, and strategic partnerships across verticals." },
   ];
-
-  const [valRef, valInView]   = useScrollReveal();
-  const [teamRef, teamInView] = useScrollReveal();
 
   return (
     <motion.div {...PAGE_TRANSITION}>
       <PageHero
         eyebrow="About Saola AI Labs"
-        title="Built to be the bridge that protects AI innovation."
-        sub='The name Saola means "bridge." We built Saola AI Labs to be the Setu (bridge) and Kavach (shield) between AI innovation and the governance obligations that protect people.'
+        title="Built to help enterprises operationalize AI safely."
+        sub="Saola AI Labs exists because most organizations want to adopt AI across their operations — but lack the infrastructure, governance, and controls to do it safely at scale."
+        cta1={{ label: "Book a Demo", href: ROUTES.pricing }}
+        cta2={{ label: "See Platform", href: ROUTES.platform }}
       />
 
-      <section className="py-24" style={{ background: C.bg }}>
+      <section className="py-24" style={{ background: C.surface }}>
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
             <div>
-              <SectionLabel>Our story</SectionLabel>
-              <h2 className="text-3xl font-bold text-white mb-6" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-                We lived the problem before building the solution.
+              <SectionLabel>Our vision</SectionLabel>
+              <h2 className="text-3xl font-bold text-white mb-5 leading-tight">
+                Enable every enterprise to put AI to work with confidence, control, and measurable business value.
               </h2>
-              <div className="space-y-4 text-sm leading-relaxed" style={{ color: C.muted2 }}>
-                <p>We started Saola AI Labs after watching dozens of Indian SMBs scramble to understand their AI obligations when the DPDPA passed and when their first EU customer asked about GDPR compliance.</p>
-                <p>The tools that existed were built for Fortune 500 teams with dedicated DPOs, legal counsel, and 6-figure compliance budgets. Nothing was designed for a 30-person SaaS company in Bengaluru.</p>
-                <p>So we built it ourselves—a platform that combines automated compliance workflows with expert advisory, priced and designed for growing businesses.</p>
-              </div>
+              <p className="leading-relaxed mb-5" style={{ color: C.muted2 }}>
+                AI adoption is accelerating across every industry. But most enterprises are building on fragmented tools, shadow AI usage, and without the infrastructure to deploy it safely across teams, systems, and knowledge.
+              </p>
+              <p className="leading-relaxed" style={{ color: C.muted2 }}>
+                Saola provides the infrastructure layer that makes enterprise AI adoption possible — combining workflow enablement, policy controls, security, and operational visibility in one platform.
+              </p>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {[["2023", "Year founded"], ["6+", "Frameworks supported"], ["500+", "SMBs served"], ["25", "Team members"]].map(([v, l], i) => (
-                <motion.div key={i} custom={i} variants={scaleIn} initial="hidden" whileInView="visible"
-                  viewport={{ once: true }}
-                  className="p-6 rounded-2xl border text-center"
-                  style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-                  <div className="text-3xl font-bold mb-1"
-                    style={{ color: C.teal, fontFamily: "'DM Sans', sans-serif" }}>{v}</div>
-                  <div className="text-xs" style={{ color: C.muted }}>{l}</div>
-                </motion.div>
+            <div className="space-y-4">
+              {[
+                { label: "Mission", text: "Help organizations deploy and scale AI securely across workflows, systems, and enterprise knowledge through unified governance, operational controls, and enterprise-ready infrastructure." },
+                { label: "Category", text: "We are building the Enterprise AI Adoption Platform — the operating layer for organizations moving AI from experimentation to governed production deployment." },
+                { label: "Approach", text: "Governance, privacy, compliance, and security are essential capabilities — but they support AI adoption rather than define the company. Saola enables enterprises to deploy AI securely at scale." },
+              ].map((item, i) => (
+                <div key={i} className="rounded-xl p-5 border" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
+                  <Pill color={C.accent}>{item.label}</Pill>
+                  <p className="text-sm mt-3 leading-relaxed" style={{ color: C.muted2 }}>{item.text}</p>
+                </div>
               ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-24" style={{ background: C.surface }}>
-        <div className="max-w-7xl mx-auto px-6" ref={valRef}>
-          <SectionHead label="Values" title="What we believe" center maxW="max-w-xl" />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {values.map((v, i) => (
-              <motion.div key={i} custom={i} variants={fadeUp} initial="hidden" animate={valInView ? "visible" : "hidden"}
-                className="p-6 rounded-2xl border cursor-default"
-                style={{ background: C.bg, border: `1px solid ${C.border}` }}>
-                <v.icon size={22} className="mb-4" style={{ color: C.teal }} />
-                <h3 className="font-semibold text-white mb-2 text-sm">{v.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{v.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-7xl mx-auto px-6" ref={teamRef}>
-          <SectionHead label="Team" title="The people behind Saola" center maxW="max-w-lg" />
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {team.map((m, i) => (
-              <motion.div key={i} custom={i} variants={fadeUp} initial="hidden" animate={teamInView ? "visible" : "hidden"}
-                className="p-6 rounded-2xl border"
-                style={{ background: C.surface, border: `1px solid ${C.border}` }}>
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 text-sm font-bold"
-                  style={{ background: `${C.teal}18`, color: C.teal }}>
-                  {m.name.split(" ").map(w => w[0]).join("").slice(0, 2)}
-                </div>
-                <p className="font-semibold text-white text-sm mb-1">{m.name}</p>
-                <p className="text-xs leading-relaxed" style={{ color: C.muted }}>{m.role}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <FinalCTABand title="Want to join us?" sub="We're hiring across AI governance, security engineering, and product design." />
-    </motion.div>
-  );
-}
-
-// ══════════════════════════════════════════════════════════════════════════════
-// PAGE: PROBLEMS WE SOLVE
-// ══════════════════════════════════════════════════════════════════════════════
-
-function ProblemsPage() {
-  const challenges = [
-    { icon: Eye,       title: "No clear AI inventory",           prob: "Teams adopt AI tools ad-hoc; leadership has no single view of which models are in use, what data they touch, or the risk exposure.",                             sol: "Guided AI Use Case Register that stays always-on and auto-classifies risk as new tools are added.",                                                  accent: C.teal },
-    { icon: Database,  title: "Data privacy risk with GenAI",    prob: "Customer and employee personal data ends up in prompts and model training without adequate controls or consent.",                                               sol: "Prompt & Data Guard with PII/PHI detection, masking, and policy-based blocking before data ever reaches an LLM.",                                   accent: C.gold },
-    { icon: Layers,    title: "Compliance complexity",           prob: "GDPR for EU clients, DPDPA for Indian data, ISO 42001, and industry guidelines all at once—each with different controls.",                                      sol: "Unified platform that maps all obligations to AI use cases and provides a single readiness score across frameworks.",                                 accent: C.teal },
-    { icon: Users,     title: "Limited resources",               prob: "No full-time DPO, CISO, or AI governance team. Budgets are limited. The team is already stretched.",                                                           sol: "Self-service workflows, templates, and on-demand advisory. Get institutional-grade governance without the headcount.",                              accent: C.violet },
-    { icon: Building2, title: "Client & regulator expectations", prob: "Bigger customers and partners ask about AI use policies, security controls, and compliance certifications you can't yet demonstrate.",                          sol: "Dashboards, audit-ready reports, and policy attestations you can share externally—with confidence.",                                                  accent: "#34D399" },
-  ];
-
-  const [challRef, challInView] = useScrollReveal();
-
-  return (
-    <motion.div {...PAGE_TRANSITION}>
-      <PageHero
-        eyebrow="Problems We Solve"
-        title="Every challenge Indian SMBs face with AI—addressed."
-        sub="We've seen hundreds of companies struggle with the same AI governance, privacy, and security problems. Here's how we solve each one."
-      />
-
-      <section className="py-24" style={{ background: C.bg }}>
-        <div className="max-w-7xl mx-auto px-6" ref={challRef}>
-          <div className="space-y-5">
-            {challenges.map((c, i) => (
-              <motion.div key={i} custom={i} variants={fadeUp} initial="hidden" animate={challInView ? "visible" : "hidden"}
-                className="grid md:grid-cols-2 gap-0 rounded-2xl border overflow-hidden"
-                style={{ border: `1px solid ${C.border}` }}>
-                <div className="p-7 border-b md:border-b-0 md:border-r"
-                  style={{ background: C.surface, borderColor: C.border }}>
-                  <div className="flex items-start gap-3 mb-4">
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                      style={{ background: C.coralFaint }}>
-                      <c.icon size={16} style={{ color: C.coral }} />
-                    </div>
-                    <div>
-                      <Pill color={C.coral} bg={C.coralFaint}>The challenge</Pill>
-                      <h3 className="font-bold text-white mt-2">{c.title}</h3>
-                    </div>
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{c.prob}</p>
-                </div>
-                <div className="p-7" style={{ background: `${c.accent}06` }}>
-                  <div className="flex items-start gap-3 mb-4">
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0"
-                      style={{ background: `${c.accent}14` }}>
-                      <ShieldCheck size={16} style={{ color: c.accent }} />
-                    </div>
-                    <Pill color={c.accent}>How Saola AI helps</Pill>
-                  </div>
-                  <p className="text-sm leading-relaxed" style={{ color: C.textDim }}>{c.sol}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24" style={{ background: C.surface }}>
         <div className="max-w-7xl mx-auto px-6">
-          <SectionHead label="Summary" title="Challenge vs. solution at a glance" center />
-          <div className="rounded-2xl overflow-hidden border" style={{ border: `1px solid ${C.border}` }}>
-            <table className="w-full text-sm">
-              <thead>
-                <tr style={{ background: C.surface2 }}>
-                  {["Challenge", "How Saola AI helps"].map(h => (
-                    <th key={h} className="text-left px-6 py-4 text-xs font-bold uppercase tracking-widest"
-                      style={{ color: C.muted, borderBottom: `1px solid ${C.border}` }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {challenges.map((c, i) => (
-                  <tr key={i} style={{ background: i % 2 === 0 ? C.bg : C.surface }}>
-                    <td className="px-6 py-4 font-medium" style={{ color: C.coral, borderBottom: `1px solid ${C.border}` }}>{c.title}</td>
-                    <td className="px-6 py-4" style={{ color: C.muted2, borderBottom: `1px solid ${C.border}` }}>{c.sol}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <SectionHead
+            label="The team"
+            title="Enterprise AI practitioners building for enterprise AI practitioners."
+            sub="Our team combines platform engineering depth with enterprise governance expertise."
+            center maxW="max-w-xl"
+          />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {team.map((t, i) => (
+              <motion.div
+                key={i} custom={i} variants={fadeUp} initial="hidden" animate="visible"
+                className="rounded-2xl p-6 border text-center"
+                style={{ background: C.surface, border: `1px solid ${C.border}` }}
+              >
+                <div className="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center"
+                  style={{ background: C.accentFaint, border: `1px solid ${C.accentBorder}` }}>
+                  <Users size={20} style={{ color: C.accentLight }} />
+                </div>
+                <h3 className="text-sm font-semibold text-white mb-2">{t.name}</h3>
+                <p className="text-xs leading-relaxed" style={{ color: C.muted }}>{t.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      <TestimonialsSection />
       <FinalCTABand
-        title="Recognize your challenges here?"
-        sub="Book a free 30-minute assessment—we'll map your specific risks and show you how to close them."
+        title="Join us in building the enterprise AI infrastructure layer."
+        sub="We're hiring across platform engineering, enterprise sales, and AI governance."
       />
     </motion.div>
   );
@@ -1786,11 +1567,10 @@ function NotFound() {
       className="min-h-screen flex items-center justify-center text-center px-6 pt-20"
       style={{ background: C.bg }}>
       <div>
-        <p className="text-6xl font-bold mb-4"
-          style={{ color: C.teal, fontFamily: "'DM Sans', sans-serif" }}>404</p>
+        <p className="text-6xl font-bold mb-4" style={{ color: C.accentLight }}>404</p>
         <h1 className="text-3xl font-bold text-white mb-4">Page not found</h1>
         <p className="mb-8" style={{ color: C.muted }}>This route doesn't exist.</p>
-        <GlowBtn href={ROUTES.home}>Back to home</GlowBtn>
+        <PrimaryBtn href={ROUTES.home}>Back to home</PrimaryBtn>
       </div>
     </motion.div>
   );
@@ -1801,14 +1581,14 @@ function NotFound() {
 // ══════════════════════════════════════════════════════════════════════════════
 
 const PAGES = {
-  [ROUTES.home]:      HomePage,
-  [ROUTES.platform]:  PlatformPage,
-  [ROUTES.security]:  AISecurityPage,
-  [ROUTES.services]:  ServicesPage,
-  [ROUTES.pricing]:   PricingPage,
-  [ROUTES.resources]: ResourcesPage,
-  [ROUTES.about]:     AboutPage,
-  [ROUTES.problems]:  ProblemsPage,
+  [ROUTES.home]:       HomePage,
+  [ROUTES.platform]:   PlatformPage,
+  [ROUTES.governance]: GovernancePage,
+  [ROUTES.usecases]:   UseCasesPage,
+  [ROUTES.security]:   SecurityPage,
+  [ROUTES.pricing]:    PricingPage,
+  [ROUTES.resources]:  ResourcesPage,
+  [ROUTES.about]:      AboutPage,
 };
 
 function Layout() {
@@ -1836,12 +1616,12 @@ export default function App() {
         @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; }
         html { scroll-behavior: smooth; }
-        body { background: #030712; }
+        body { background: #070A12; }
         a { color: inherit; text-decoration: none; }
         ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #0D1117; }
+        ::-webkit-scrollbar-track { background: #0D1120; }
         ::-webkit-scrollbar-thumb { background: #30363D; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #00E5CC; }
+        ::-webkit-scrollbar-thumb:hover { background: #4C3FE0; }
       `}</style>
       <Router>
         <Layout />
