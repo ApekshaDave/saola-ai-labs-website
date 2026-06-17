@@ -16,6 +16,7 @@ import {
   Users,
   TrendingUp, Search, Award, Target,
 } from "lucide-react";
+import HackDecodedApp from "./hackdecoded/App";
 
 // ══════════════════════════════════════════════════════════════════════════════
 // DESIGN TOKENS — light, teal-led, calm, professional per PDF spec
@@ -73,6 +74,8 @@ const ROUTES = {
   usecases:    "/use-cases",
   about:       "/about",
   contact:     "/contact",
+  productss:   "/productss",
+  hackdecoded: "/productss/hackdecoded",
 };
 
 const PAGE_META = {
@@ -87,10 +90,13 @@ const PAGE_META = {
   [ROUTES.usecases]:   { title: "Use Cases | Saola AI Labs", description: "Real AI adoption outcomes for SMBs — workflow automation, team enablement, governance, and more." },
   [ROUTES.about]:      { title: "About | Saola AI Labs", description: "Saola AI Labs — vision, mission, and team behind practical AI adoption for SMBs." },
   [ROUTES.contact]:    { title: "Book a Discovery Call | Saola AI Labs", description: "Book a discovery call with Saola to explore where AI can create practical value in your business." },
+  [ROUTES.productss]:   { title: "Products | Saola AI Labs", description: "Practical tools and platforms built to support SMB digital transformation and training." },
+  [ROUTES.hackdecoded]: { title: "Hack-Decoded | Saola AI Labs", description: "Interactive cyber security awareness and learning platform." },
 };
 
 const NAV_LINKS = [
   { label: "Services",   path: ROUTES.services },
+  { label: "Products",   path: ROUTES.productss },
   { label: "Why Saola",  path: ROUTES.whySaola },
   { label: "Use Cases",  path: ROUTES.usecases },
   { label: "About",      path: ROUTES.about },
@@ -1427,6 +1433,143 @@ function ContactPage() {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
+// PRODUCTS PAGE
+// ══════════════════════════════════════════════════════════════════════════════
+function ProductsPage() {
+  usePageMeta(ROUTES.productss);
+  const [ref, inView] = useScrollReveal();
+  
+  return (
+    <motion.div {...PAGE_TRANSITION}>
+      <PageHero 
+        eyebrow="Products & Platforms" 
+        title="Practical security and automation tools for your business."
+        sub="We build and deploy interactive platforms that enable team training and operational clarity, empowering growing businesses to work securely."
+        cta1={{ label: "Book a Discovery Call", href: ROUTES.contact }}
+        cta2={{ label: "Explore Services", href: ROUTES.services }} 
+      />
+
+      <section className="py-20" style={{ background: C.bg }} aria-labelledby="products-h2">
+        <div className="max-w-6xl mx-auto px-6">
+          <SectionHead 
+            label="Interactive Tools" 
+            title="Our software solutions." 
+            sub="Explore platforms built to solve real workforce enablement and workflow challenges." 
+          />
+          
+          <div className="grid md:grid-cols-2 gap-8" ref={ref}>
+            {/* Hack-Decoded Card */}
+            <motion.div 
+              custom={0} 
+              variants={fadeUp} 
+              initial="hidden" 
+              animate={inView ? "visible" : "hidden"}
+              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0, 212, 255, 0.15)" }}
+              className="rounded-2xl p-8 border flex flex-col justify-between transition-all duration-300 relative overflow-hidden cursor-pointer"
+              style={{ 
+                background: "linear-gradient(135deg, #060b14 0%, #0d1526 100%)", 
+                border: "1px solid #162040" 
+              }}
+              onClick={() => window.location.hash = ROUTES.hackdecoded}
+            >
+              {/* Glow Accent */}
+              <div 
+                className="absolute top-0 left-0 w-full h-[2px]" 
+                style={{ background: "linear-gradient(90deg, transparent, #00d4ff, transparent)" }} 
+              />
+              
+              <div>
+                <div className="flex justify-between items-start mb-6">
+                  <div 
+                    className="w-12 h-12 rounded-xl flex items-center justify-center" 
+                    style={{ background: "rgba(0, 212, 255, 0.1)", border: "1px solid rgba(0, 212, 255, 0.2)" }}
+                  >
+                    <Lock size={22} style={{ color: "#00d4ff" }} aria-hidden="true" />
+                  </div>
+                  <span 
+                    className="text-[10px] font-bold tracking-widest px-2.5 py-1 rounded bg-[#00d4ff]/10 border border-[#00d4ff]/20 text-[#00d4ff] uppercase"
+                  >
+                    Active Platform
+                  </span>
+                </div>
+                
+                <h3 className="text-xl font-bold mb-2 text-white" style={{ fontFamily: "'Inter', sans-serif" }}>
+                  HACK<span style={{ color: "#00d4ff" }}>DECODED</span>
+                </h3>
+                
+                <p className="text-sm font-semibold mb-3" style={{ color: "rgba(255,255,255,0.7)" }}>
+                  Cyber Security Awareness & Learning
+                </p>
+                
+                <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.55)" }}>
+                  An interactive, AI-powered explainer and training platform. Analyze cyber attacks in real-time, search CVE database vulnerabilities, test your team's readiness with interactive quizzes, and explore current threats in simple bilingual terms.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 text-sm font-bold mt-4" style={{ color: "#00d4ff" }}>
+                Launch Platform <ArrowRight size={14} />
+              </div>
+            </motion.div>
+
+            {/* Saola Automation Hub Card (Coming Soon) */}
+            <motion.div 
+              custom={1} 
+              variants={fadeUp} 
+              initial="hidden" 
+              animate={inView ? "visible" : "hidden"}
+              whileHover={{ y: -4, boxShadow: "0 12px 30px rgba(13,107,110,0.08)" }}
+              className="rounded-2xl p-8 border flex flex-col justify-between transition-all duration-300 relative overflow-hidden"
+              style={{ 
+                background: C.surface, 
+                border: `1px solid ${C.border}` 
+              }}
+            >
+              <div>
+                <div className="flex justify-between items-start mb-6">
+                  <div 
+                    className="w-12 h-12 rounded-xl flex items-center justify-center" 
+                    style={{ background: C.primaryFaint, border: `1px solid ${C.primaryBorder}` }}
+                  >
+                    <Workflow size={22} style={{ color: C.primary }} aria-hidden="true" />
+                  </div>
+                  <span 
+                    className="text-[10px] font-bold tracking-widest px-2.5 py-1 rounded uppercase"
+                    style={{ background: C.amberFaint, color: C.amber, border: `1px solid ${C.amberFaint}` }}
+                  >
+                    Coming Soon
+                  </span>
+                </div>
+                
+                <h3 className="text-xl font-bold mb-2" style={{ color: C.ink }}>
+                  Saola Automation Hub
+                </h3>
+                
+                <p className="text-sm font-semibold mb-3" style={{ color: C.inkMuted }}>
+                  Workflow Orchestration Dashboard
+                </p>
+                
+                <p className="text-sm leading-relaxed mb-6" style={{ color: C.inkMuted }}>
+                  A centralized cockpit to orchestrate, monitor, and optimize your business's AI workflow automations and integrations in real time. Track system performance, audit AI decisions, and get operational insights.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2 text-sm font-bold mt-4" style={{ color: C.inkFaint }}>
+                Under Development
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+      
+      <FinalCTA 
+        title="Ready to build custom tools or automate your operations?" 
+        sub="Book a discovery call to talk about tailored software and automation systems for your business." 
+      />
+    </motion.div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
 // NOT FOUND
 // ══════════════════════════════════════════════════════════════════════════════
 function NotFound() {
@@ -1457,20 +1600,23 @@ const PAGES = {
   [ROUTES.usecases]:   UseCasesPage,
   [ROUTES.about]:      AboutPage,
   [ROUTES.contact]:    ContactPage,
+  [ROUTES.productss]:   ProductsPage,
+  [ROUTES.hackdecoded]: HackDecodedApp,
 };
 
 function Layout() {
   const { path } = useRouter();
   const Page = PAGES[path] || NotFound;
+  const isEmbed = path === ROUTES.hackdecoded;
   return (
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Inter', 'DM Sans', system-ui, sans-serif" }}>
-      <Navbar />
+      {!isEmbed && <Navbar />}
       <main id="main-content" role="main">
         <AnimatePresence mode="wait">
           <Page key={path} />
         </AnimatePresence>
       </main>
-      <Footer />
+      {!isEmbed && <Footer />}
     </div>
   );
 }
