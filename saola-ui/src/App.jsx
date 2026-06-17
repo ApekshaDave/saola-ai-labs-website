@@ -178,6 +178,25 @@ const PAGE_TRANSITION = {
   exit:    { opacity: 0, y: -8, transition: { duration: 0.22 } },
 };
 
+const Linkedin = ({ size = 13, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
 // ══════════════════════════════════════════════════════════════════════════════
 // UI PRIMITIVES
 // ══════════════════════════════════════════════════════════════════════════════
@@ -431,9 +450,9 @@ function Footer() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-14">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div className="grid md:grid-cols-3 gap-10 mb-12">
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div>
             <div className="flex items-center gap-2.5 mb-4">
               <img src="/logo.png" alt="Saola AI Labs" className="w-9 h-9 object-contain" />
               <span className="font-bold text-white">Saola AI Labs</span>
@@ -445,8 +464,13 @@ function Footer() {
               Strategy · Automation · Enablement · Governance · Privacy
             </p>
             <div className="flex gap-2">
-              {[{ Icon: Mail, label: "Email" }, { Icon: Globe, label: "Website" }, { Icon: Phone, label: "Phone" }].map(({ Icon, label }) => (
-                <a key={label} href="#" aria-label={label}
+              {[
+                { Icon: Mail, label: "Email", href: "mailto:info@saolaailabs.com" },
+                { Icon: Globe, label: "Website", href: "https://saolaailabs.com" },
+                { Icon: Phone, label: "Phone", href: "tel:+1234567890" },
+                { Icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/saola-ai-labs" }
+              ].map(({ Icon, label, href }) => (
+                <a key={label} href={href} aria-label={label} target={label !== "Email" && label !== "Phone" ? "_blank" : undefined} rel="noopener noreferrer"
                   className="w-8 h-8 rounded-lg flex items-center justify-center border transition-colors duration-200"
                   style={{ border: "1px solid rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.40)" }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = C.primaryMid; e.currentTarget.style.color = "#fff"; }}
@@ -484,22 +508,6 @@ function Footer() {
                     onMouseEnter={e => e.currentTarget.style.color = "#fff"}
                     onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.50)"}>{l.label}
                   </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <p className="text-xs font-bold uppercase tracking-widest mb-4" style={{ color: "rgba(255,255,255,0.35)" }}>Legal</p>
-            <ul className="space-y-2.5">
-              {["Privacy Policy", "Terms of Service", "AI Usage Policy"].map(l => (
-                <li key={l}>
-                  <a href="#" className="text-sm transition-colors duration-200 block"
-                    style={{ color: "rgba(255,255,255,0.50)" }}
-                    onMouseEnter={e => e.currentTarget.style.color = "#fff"}
-                    onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.50)"}>{l}
-                  </a>
                 </li>
               ))}
             </ul>
@@ -821,8 +829,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ── SECTION 8: TESTIMONIALS ─────────────────────────────────────────── */}
-      <TestimonialsSection />
+      {/* ── SECTION 8: TESTIMONIALS (Removed as of now) ── */}
 
       {/* ── SECTION 9: FINAL CTA ────────────────────────────────────────────── */}
       <FinalCTA />
@@ -886,7 +893,6 @@ function ServicesPage() {
         </div>
       </section>
 
-      <TestimonialsSection />
       <FinalCTA title="Not sure which service fits your situation?" sub="Start with a discovery call — we will map the right entry point for your business." />
     </motion.div>
   );
@@ -1174,7 +1180,6 @@ function WhySaolaPage() {
         </div>
       </section>
 
-      <TestimonialsSection />
       <FinalCTA title="Discover how Saola can support your AI adoption journey." sub="Book a discovery call — a practical conversation about where AI can help your business." />
     </motion.div>
   );
@@ -1281,7 +1286,6 @@ function AboutPage() {
           </div>
         </div>
       </section>
-      <TestimonialsSection />
       <FinalCTA title="Learn whether Saola is the right fit for your AI adoption goals." sub="A 30-minute discovery call is the best way to find out." />
     </motion.div>
   );
