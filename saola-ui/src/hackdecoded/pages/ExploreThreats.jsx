@@ -4,8 +4,8 @@ import { useLang } from '../context/LanguageContext'
 import { PageHeader } from '../components/CyberComponents'
 
 // CISA Known Exploited Vulnerabilities (KEV) Catalog Endpoint
-// Direct URL works in both dev and production (CISA supports CORS on this public feed)
-const CISA_KEV_URL = 'https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json'
+// Proxied via /api/cisa/kev — Vite proxy in dev, Vercel rewrite in production
+const CISA_KEV_URL = '/api/cisa/kev'
 const AUTO_REFRESH_MS = 10 * 60 * 1000 // auto-refresh every 10 min
 
 // ─── Severity configuration ──────────────────────────────────────────────────────────
