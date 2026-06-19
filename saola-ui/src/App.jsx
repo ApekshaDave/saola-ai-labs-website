@@ -747,8 +747,6 @@ function HomePage() {
         <div className="max-w-6xl mx-auto px-6">
           <SectionHead label="How it works" title="A practical process from day one." sub="Simple, low-friction engagement designed for lean teams and growing businesses." maxW="max-w-lg" center />
           <div className="grid md:grid-cols-3 gap-6 relative">
-            {/* Connector line */}
-            <div className="hidden md:block absolute top-8 left-[33%] right-[33%] h-px" style={{ background: C.border }} aria-hidden="true" />
             {[
               { step: "01", icon: Search,      title: "Assess opportunities and readiness", desc: "We map your workflows, identify where AI can create real value, and assess what your team is ready to adopt. No generic recommendations." },
               { step: "02", icon: Workflow,     title: "Design and implement practical solutions", desc: "We build, configure, and integrate AI solutions into your actual operations — hands-on, not advisory-only." },
