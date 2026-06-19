@@ -197,6 +197,25 @@ const Linkedin = ({ size = 13, ...props }) => (
   </svg>
 );
 
+const Instagram = ({ size = 13, ...props }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+  </svg>
+);
+
 // ══════════════════════════════════════════════════════════════════════════════
 // UI PRIMITIVES
 // ══════════════════════════════════════════════════════════════════════════════
@@ -468,7 +487,8 @@ function Footer() {
                 { Icon: Mail, label: "Email", href: "mailto:info@saolaailabs.com" },
                 { Icon: Globe, label: "Website", href: "https://saolaailabs.com" },
                 { Icon: Phone, label: "Phone", href: "tel:+1234567890" },
-                { Icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/saola-ai-labs" }
+                { Icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/company/saola-ai-labs" },
+                { Icon: Instagram, label: "Instagram", href: "https://www.instagram.com/saola_ai_labs?igsh=MTc4emtxMTY0YnJweA==" }
               ].map(({ Icon, label, href }) => (
                 <a key={label} href={href} aria-label={label} target={label !== "Email" && label !== "Phone" ? "_blank" : undefined} rel="noopener noreferrer"
                   className="w-8 h-8 rounded-lg flex items-center justify-center border transition-colors duration-200"
@@ -1355,6 +1375,20 @@ function ContactPage() {
               <div className="rounded-xl p-5 border" style={{ background: C.surface, border: `1px solid ${C.border}` }}>
                 <p className="text-xs font-bold uppercase tracking-widest mb-2" style={{ color: C.inkFaint }}>What to expect</p>
                 <p className="text-sm leading-relaxed" style={{ color: C.inkMid }}>We respond within one business day to confirm your session. Discovery calls are 30 minutes, conducted by a senior Saola team member, and focused entirely on your business situation.</p>
+              </div>
+              <div className="flex items-center gap-3 mt-6 rounded-xl p-4 border" style={{ background: C.primaryFaint, border: `1px solid ${C.primaryBorder}` }}>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: C.surface, border: `1px solid ${C.primaryBorder}` }}>
+                  <Mail size={14} style={{ color: C.primary }} aria-hidden="true" />
+                </div>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: C.inkFaint }}>Email us directly</p>
+                  <a href="mailto:info@saolaailabs.com" className="text-sm font-semibold transition-colors"
+                    style={{ color: C.primary }}
+                    onMouseEnter={e => e.currentTarget.style.color = C.primaryDark}
+                    onMouseLeave={e => e.currentTarget.style.color = C.primary}>
+                    info@saolaailabs.com
+                  </a>
+                </div>
               </div>
             </div>
 
