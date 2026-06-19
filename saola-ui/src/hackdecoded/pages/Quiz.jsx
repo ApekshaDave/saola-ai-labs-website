@@ -57,21 +57,21 @@ export default function Quiz({ userProfile }) {
 
   const retry = () => { setCurrentQ(0); setSelected(null); setAnswered(false); setScore(0); setFinished(false); setAnswers([]) }
 
-  const scoreColor = () => { const p = (score / questions.length) * 100; return p >= 80 ? '#00ff88' : p >= 50 ? '#ffcc00' : '#ff2244' }
+  const scoreColor = () => { const p = (score / questions.length) * 100; return p >= 80 ? 'var(--cyber-green)' : p >= 50 ? 'var(--cyber-yellow)' : 'var(--cyber-red)' }
   const scoreMsg = () => { const p = (score / questions.length) * 100; return p >= 80 ? t('quiz_excellent') : p >= 50 ? t('quiz_good') : t('quiz_keep') }
 
   if (loading) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: '1.5rem' }}>
-      <div style={{ width: '50px', height: '50px', border: '1px solid #00d4ff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1.5s linear infinite', boxShadow: '0 0 16px rgba(0,212,255,0.3)' }} />
-      <div style={{ fontFamily: 'var(--font-display)', fontSize: '12px', color: '#00d4ff', letterSpacing: '3px' }}>{t('quiz_generating')}</div>
+      <div style={{ width: '52px', height: '52px', border: '2px solid var(--cyber-blue)', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1.5s linear infinite', boxShadow: '0 0 16px rgba(139,92,246,0.2)' }} />
+      <div style={{ fontFamily: 'var(--font-display)', fontSize: '13px', color: 'var(--cyber-blue)', letterSpacing: '2px', fontWeight: '700', textShadow: '0 0 10px rgba(139,92,246,0.3)' }}>{t('quiz_generating')}</div>
     </div>
   )
 
   if (error) return (
     <div style={{ maxWidth: '600px', margin: '4rem auto', padding: '0 1.25rem', textAlign: 'center' }}>
-      <div style={{ background: 'rgba(255,34,68,0.08)', border: '1px solid rgba(255,34,68,0.3)', borderRadius: '8px', padding: '2rem' }}>
-        <p style={{ color: '#ff2244', fontFamily: 'var(--font-mono)', fontSize: '13px', marginBottom: '1.5rem' }}>{error}</p>
-        <button onClick={() => navigate('/explainer')} style={{ background: 'transparent', border: '1px solid #ff2244', borderRadius: '4px', padding: '8px 20px', color: '#ff2244', fontFamily: 'var(--font-display)', fontSize: '10px', letterSpacing: '2px', cursor: 'pointer' }}>{t('quiz_back')}</button>
+      <div style={{ background: 'rgba(244,63,94,0.08)', border: '1px solid rgba(244,63,94,0.3)', borderRadius: '12px', padding: '2rem' }}>
+        <p style={{ color: 'var(--cyber-red)', fontFamily: 'var(--font-mono)', fontSize: '13px', marginBottom: '1.5rem', fontWeight: '600' }}>{error}</p>
+        <button onClick={() => navigate('/explainer')} style={{ background: 'transparent', border: '1px solid var(--cyber-red)', borderRadius: '9999px', padding: '8px 24px', color: 'var(--cyber-red)', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '1px', cursor: 'pointer', fontWeight: '700' }}>{t('quiz_back')}</button>
       </div>
     </div>
   )
@@ -79,31 +79,34 @@ export default function Quiz({ userProfile }) {
   if (finished) {
     const sc = scoreColor()
     return (
-      <div className="page-container" style={{ maxWidth: '680px' }}>
-        <div style={{ background: 'var(--cyber-card)', border: '1px solid var(--cyber-border)', borderRadius: '10px', padding: '2.5rem', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+      <div className="page-container" style={{ maxWidth: '680px', padding: '3.5rem 1.25rem' }}>
+        <div style={{ background: 'var(--cyber-card)', border: '1px solid var(--cyber-border)', borderRadius: '16px', padding: '2.5rem', textAlign: 'center', position: 'relative', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
           <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '3px', background: `linear-gradient(90deg, transparent, ${sc}, transparent)` }} />
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '4px', color: sc, marginBottom: '1.5rem', textShadow: `0 0 8px ${sc}60` }}>{t('quiz_results')}</div>
-          <div style={{ width: '110px', height: '110px', border: `3px solid ${sc}`, borderRadius: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', boxShadow: `0 0 30px ${sc}30, inset 0 0 20px ${sc}08` }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: '800', color: sc, lineHeight: 1, textShadow: `0 0 16px ${sc}80` }}>{score}</div>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--cyber-text-dim)' }}>/ {questions.length}</div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '3px', color: sc, marginBottom: '1.5rem', textShadow: `0 0 8px ${sc}40`, fontWeight: '600' }}>{t('quiz_results')}</div>
+          <div style={{ width: '110px', height: '110px', border: `3px solid ${sc}`, borderRadius: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem', boxShadow: `0 0 30px ${sc}15, inset 0 0 20px ${sc}05` }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '2.5rem', fontWeight: '800', color: sc, lineHeight: 1, textShadow: `0 0 16px ${sc}60` }}>{score}</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--cyber-text-dim)', fontWeight: '600' }}>/ {questions.length}</div>
           </div>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: '10px', letterSpacing: '2px', color: 'var(--cyber-text-dim)', marginBottom: '0.5rem' }}>{t('quiz_score')}</div>
-          <p style={{ fontFamily: 'var(--font-body)', fontSize: '1rem', color: '#fff', marginBottom: '2rem', lineHeight: 1.5 }}>{scoreMsg()}</p>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '1px', color: 'var(--cyber-text-dim)', marginBottom: '0.5rem', fontWeight: '600' }}>{t('quiz_score')}</div>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: '1.05rem', color: '#fff', marginBottom: '2rem', lineHeight: 1.5, fontWeight: '500' }}>{scoreMsg()}</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '2rem', textAlign: 'left' }}>
             {answers.map((a, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', background: a.isCorrect ? 'rgba(0,255,136,0.05)' : 'rgba(255,34,68,0.05)', border: `1px solid ${a.isCorrect ? 'rgba(0,255,136,0.15)' : 'rgba(255,34,68,0.15)'}`, borderRadius: '4px', padding: '10px 14px' }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: a.isCorrect ? '#00ff88' : '#ff2244', minWidth: '18px', textShadow: a.isCorrect ? '0 0 8px rgba(0,255,136,0.6)' : '0 0 8px rgba(255,34,68,0.6)' }}>{a.isCorrect ? '✓' : '✗'}</span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--cyber-text-dim)' }}>Q{i + 1}</span>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.83rem', color: 'var(--cyber-text)', flex: 1 }}>{questions[i]?.question}</span>
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', background: a.isCorrect ? 'rgba(16,185,129,0.04)' : 'rgba(244,63,94,0.04)', border: `1px solid ${a.isCorrect ? 'rgba(16,185,129,0.15)' : 'rgba(244,63,94,0.15)'}`, borderRadius: '8px', padding: '10px 14px' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: a.isCorrect ? 'var(--cyber-green)' : 'var(--cyber-red)', minWidth: '18px', fontWeight: '800' }}>{a.isCorrect ? '✓' : '✗'}</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--cyber-text-dim)', fontWeight: '600' }}>Q{i + 1}</span>
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.88rem', color: 'var(--cyber-text)', flex: 1 }}>{questions[i]?.question}</span>
               </div>
             ))}
           </div>
-          <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button onClick={retry} style={{ padding: '0.8rem 1.5rem', background: 'rgba(0,212,255,0.08)', border: '1px solid rgba(0,212,255,0.4)', borderRadius: '6px', color: '#00d4ff', fontFamily: 'var(--font-display)', fontSize: '10px', letterSpacing: '2px', cursor: 'pointer', transition: 'all 0.2s' }}
-              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 0 16px rgba(0,212,255,0.2)'}
-              onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
+          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <button onClick={retry} style={{ padding: '0.8rem 1.75rem', background: 'rgba(139,92,246,0.12)', border: '1px solid var(--cyber-blue)', borderRadius: '9999px', color: '#fff', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '1px', cursor: 'pointer', transition: 'all 0.2s', fontWeight: '700', boxShadow: '0 4px 12px rgba(139,92,246,0.15)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(139,92,246,0.2)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(139,92,246,0.25)' }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(139,92,246,0.12)'; e.currentTarget.style.boxShadow = '0 4px 12px rgba(139,92,246,0.15)' }}
             >{t('quiz_retry')}</button>
-            <button onClick={() => navigate('/explainer')} style={{ padding: '0.8rem 1.5rem', background: 'transparent', border: '1px solid var(--cyber-border)', borderRadius: '6px', color: 'var(--cyber-text-dim)', fontFamily: 'var(--font-display)', fontSize: '10px', letterSpacing: '2px', cursor: 'pointer' }}>{t('quiz_back')}</button>
+            <button onClick={() => navigate('/explainer')} style={{ padding: '0.8rem 1.75rem', background: 'transparent', border: '1px solid var(--cyber-border)', borderRadius: '9999px', color: 'var(--cyber-text-dim)', fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '1px', cursor: 'pointer', fontWeight: '700', transition: 'all 0.2s' }}
+              onMouseEnter={e => { e.currentTarget.style.color = '#fff'; e.currentTarget.style.borderColor = 'var(--cyber-blue)'; e.currentTarget.style.background = 'rgba(139,92,246,0.05)' }}
+              onMouseLeave={e => { e.currentTarget.style.color = 'var(--cyber-text-dim)'; e.currentTarget.style.borderColor = 'var(--cyber-border)'; e.currentTarget.style.background = 'transparent' }}
+            >{t('quiz_back')}</button>
           </div>
         </div>
       </div>
@@ -114,37 +117,37 @@ export default function Quiz({ userProfile }) {
   const progress = (currentQ / questions.length) * 100
 
   return (
-    <div className="page-container" style={{ maxWidth: '680px' }}>
-      <div style={{ marginBottom: '1.5rem' }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '3px', color: '#00d4ff', marginBottom: '0.5rem' }}>{t('quiz_label')}</div>
+    <div className="page-container" style={{ maxWidth: '680px', padding: '3.5rem 1.25rem' }}>
+      <div style={{ marginBottom: '2rem' }}>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '2px', color: 'var(--cyber-blue)', marginBottom: '0.5rem', fontWeight: '600' }}>{t('quiz_label')}</div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1rem, 2.5vw, 1.3rem)', fontWeight: '700', color: '#fff', letterSpacing: '2px' }}>{t('quiz_title')}</h1>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '11px', color: '#00d4ff', textShadow: '0 0 8px rgba(0,212,255,0.5)' }}>{t('quiz_question')} {currentQ + 1} {t('quiz_of')} {questions.length}</span>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.1rem, 2.5vw, 1.45rem)', fontWeight: '800', color: '#fff', letterSpacing: '1px' }}>{t('quiz_title')}</h1>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: '12px', color: 'var(--cyber-blue)', textShadow: '0 0 8px rgba(139,92,246,0.3)', fontWeight: '600' }}>{t('quiz_question')} {currentQ + 1} {t('quiz_of')} {questions.length}</span>
         </div>
         <div style={{ height: '3px', background: 'var(--cyber-border)', borderRadius: '2px', overflow: 'hidden' }}>
-          <div style={{ height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg, #00d4ff, #9944ff)', transition: 'width 0.4s ease', boxShadow: '0 0 8px rgba(0,212,255,0.4)' }} />
+          <div style={{ height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg, var(--cyber-blue), var(--cyber-purple))', transition: 'width 0.4s ease', boxShadow: '0 0 8px rgba(139,92,246,0.3)' }} />
         </div>
       </div>
 
-      <div style={{ background: 'var(--cyber-card)', border: '1px solid var(--cyber-border)', borderRadius: '8px', padding: '1.75rem', marginBottom: '1rem', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '2px', background: 'linear-gradient(90deg, transparent, #00d4ff 40%, #9944ff 60%, transparent)', opacity: 0.6 }} />
-        <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.95rem, 2vw, 1.05rem)', color: '#fff', lineHeight: 1.6, marginBottom: '1.5rem', fontWeight: '500' }}>{q?.question}</p>
+      <div style={{ background: 'var(--cyber-card)', border: '1px solid var(--cyber-border)', borderRadius: '16px', padding: '2rem', marginBottom: '1rem', position: 'relative', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.4)' }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '2px', background: 'linear-gradient(90deg, transparent, var(--cyber-blue) 40%, var(--cyber-purple) 60%, transparent)', opacity: 0.6 }} />
+        <p style={{ fontFamily: 'var(--font-body)', fontSize: 'clamp(0.98rem, 2vw, 1.1rem)', color: '#fff', lineHeight: 1.6, marginBottom: '1.75rem', fontWeight: '600' }}>{q?.question}</p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {q?.options.map((opt, i) => {
             let borderColor = 'var(--cyber-border)', bg = 'transparent', color = 'var(--cyber-text)', glow = 'none'
             if (answered) {
-              if (i === q.correctIndex) { borderColor = '#00ff88'; bg = 'rgba(0,255,136,0.07)'; color = '#00ff88'; glow = '0 0 12px rgba(0,255,136,0.15)' }
-              else if (i === selected) { borderColor = '#ff2244'; bg = 'rgba(255,34,68,0.07)'; color = '#ff2244' }
+              if (i === q.correctIndex) { borderColor = 'var(--cyber-green)'; bg = 'rgba(16,185,129,0.06)'; color = 'var(--cyber-green)'; glow = '0 0 12px rgba(16,185,129,0.15)' }
+              else if (i === selected) { borderColor = 'var(--cyber-red)'; bg = 'rgba(244,63,94,0.06)'; color = 'var(--cyber-red)' }
             }
             return (
-              <button key={i} onClick={() => handleSelect(i)} style={{ background: bg, border: `1px solid ${borderColor}`, borderRadius: '5px', padding: '0.9rem 1rem', display: 'flex', alignItems: 'center', gap: '12px', cursor: answered ? 'default' : 'pointer', transition: 'all 0.2s', textAlign: 'left', boxShadow: glow }}
-                onMouseEnter={e => { if (!answered) { e.currentTarget.style.borderColor = '#00d4ff'; e.currentTarget.style.background = 'rgba(0,212,255,0.05)' } }}
+              <button key={i} onClick={() => handleSelect(i)} style={{ background: bg, border: `1px solid ${borderColor}`, borderRadius: '8px', padding: '0.9rem 1.25rem', display: 'flex', alignItems: 'center', gap: '12px', cursor: answered ? 'default' : 'pointer', transition: 'all 0.25s', textAlign: 'left', boxShadow: glow }}
+                onMouseEnter={e => { if (!answered) { e.currentTarget.style.borderColor = 'var(--cyber-blue)'; e.currentTarget.style.background = 'rgba(139,92,246,0.05)' } }}
                 onMouseLeave={e => { if (!answered) { e.currentTarget.style.borderColor = 'var(--cyber-border)'; e.currentTarget.style.background = 'transparent' } }}
               >
-                <span style={{ minWidth: '28px', height: '28px', border: `1px solid ${borderColor}`, borderRadius: '3px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: '10px', color, flexShrink: 0, transition: 'all 0.2s' }}>
+                <span style={{ minWidth: '28px', height: '28px', border: `1px solid ${borderColor}`, borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: '11px', color, flexShrink: 0, transition: 'all 0.2s', fontWeight: '700' }}>
                   {answered && i === q.correctIndex ? '✓' : answered && i === selected && i !== q.correctIndex ? '✗' : String.fromCharCode(65 + i)}
                 </span>
-                <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.88rem', color, lineHeight: 1.4, transition: 'color 0.2s' }}>{opt}</span>
+                <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem', color, lineHeight: 1.4, transition: 'color 0.2s', fontWeight: '500' }}>{opt}</span>
               </button>
             )
           })}
@@ -152,18 +155,27 @@ export default function Quiz({ userProfile }) {
       </div>
 
       {answered && (
-        <div style={{ background: selected === q.correctIndex ? 'rgba(0,255,136,0.05)' : 'rgba(255,102,0,0.05)', border: `1px solid ${selected === q.correctIndex ? 'rgba(0,255,136,0.2)' : 'rgba(255,102,0,0.2)'}`, borderRadius: '6px', padding: '1.1rem', marginBottom: '1rem', animation: 'fadeInUp 0.3s ease' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', letterSpacing: '3px', color: selected === q.correctIndex ? '#00ff88' : '#ff6600', marginBottom: '5px' }}>
+        <div style={{ background: selected === q.correctIndex ? 'rgba(16,185,129,0.04)' : 'rgba(249,115,22,0.04)', border: `1px solid ${selected === q.correctIndex ? 'rgba(16,185,129,0.15)' : 'rgba(249,115,22,0.15)'}`, borderRadius: '12px', padding: '1.25rem', marginBottom: '1rem', animation: 'fadeInUp 0.3s ease' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '1px', color: selected === q.correctIndex ? 'var(--cyber-green)' : 'var(--cyber-orange)', marginBottom: '6px', fontWeight: '600' }}>
             {selected === q.correctIndex ? `✓ ${t('quiz_correct')}` : `✗ ${t('quiz_wrong')}`} — {t('quiz_explanation')}
           </div>
-          <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.88rem', color: 'var(--cyber-text)', lineHeight: 1.6, margin: 0 }}>{q.explanation}</p>
+          <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.9rem', color: 'var(--cyber-text)', lineHeight: 1.6, margin: 0 }}>{q.explanation}</p>
         </div>
       )}
 
       {answered && (
-        <button onClick={handleNext} style={{ width: '100%', padding: '1rem', background: 'rgba(0,212,255,0.08)', border: '1px solid rgba(0,212,255,0.4)', borderRadius: '6px', color: '#00d4ff', fontFamily: 'var(--font-display)', fontSize: '10px', letterSpacing: '3px', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 0 16px rgba(0,212,255,0.08)', animation: 'fadeInUp 0.3s ease' }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(0,212,255,0.15)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(0,212,255,0.2)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(0,212,255,0.08)'; e.currentTarget.style.boxShadow = '0 0 16px rgba(0,212,255,0.08)' }}
+        <button onClick={handleNext} style={{ 
+          width: '100%', padding: '1rem', 
+          background: 'rgba(139,92,246,0.12)', 
+          border: '1px solid var(--cyber-blue)', 
+          borderRadius: '9999px', 
+          color: '#fff', 
+          fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '2px', cursor: 'pointer', transition: 'all 0.25s', 
+          boxShadow: '0 4px 16px rgba(139,92,246,0.15)', animation: 'fadeInUp 0.3s ease',
+          fontWeight: '700'
+        }}
+          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(139,92,246,0.2)'; e.currentTarget.style.boxShadow = '0 6px 20px rgba(139,92,246,0.25)' }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'rgba(139,92,246,0.12)'; e.currentTarget.style.boxShadow = '0 4px 16px rgba(139,92,246,0.15)' }}
         >
           {currentQ < questions.length - 1 ? t('quiz_next') : t('quiz_finish')}
         </button>

@@ -1,38 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 /* ═══════════════════════════════════════════
    ROOT VARIABLES — Design Tokens
 ═══════════════════════════════════════════ */
 .hackdecoded-theme {
   /* Core colors */
-  --cyber-black:    #030509;
-  --cyber-dark:     #060b14;
-  --cyber-card:     #090f1e;
-  --cyber-card2:    #0d1526;
-  --cyber-border:   #162040;
-  --cyber-border2:  #1e2d55;
+  --cyber-black:    #030108;
+  --cyber-dark:     #070411;
+  --cyber-card:     #0c081d;
+  --cyber-card2:    #110a26;
+  --cyber-border:   rgba(139, 92, 246, 0.15);
+  --cyber-border2:  rgba(139, 92, 246, 0.3);
 
   /* Accent colors */
-  --cyber-blue:     #00d4ff;
-  --cyber-blue-dim: #007799;
-  --cyber-blue-glow: rgba(0,212,255,0.25);
-  --cyber-green:    #00ff88;
-  --cyber-green-dim:#00aa55;
-  --cyber-red:      #ff2244;
-  --cyber-orange:   #ff6600;
-  --cyber-yellow:   #ffcc00;
-  --cyber-purple:   #9944ff;
-  --cyber-pink:     #ff44aa;
+  --cyber-blue:     #8b5cf6; /* Main neon purple */
+  --cyber-blue-dim: #6d28d9;
+  --cyber-blue-glow: rgba(139, 92, 246, 0.25);
+  --cyber-green:    #10b981;
+  --cyber-green-dim:#047857;
+  --cyber-red:      #f43f5e;
+  --cyber-orange:   #f97316;
+  --cyber-yellow:   #eab308;
+  --cyber-purple:   #c084fc;
+  --cyber-pink:     #f472b6;
 
   /* Text */
-  --cyber-text:     #c0d0f0;
-  --cyber-text-dim: #556080;
-  --cyber-text-muted: #334060;
+  --cyber-text:     #f1f5f9;
+  --cyber-text-dim: #94a3b8;
+  --cyber-text-muted: #64748b;
 
   /* Fonts */
-  --font-display:   'Orbitron', monospace;
-  --font-mono:      'Share Tech Mono', monospace;
-  --font-body:      'Rajdhani', sans-serif;
+  --font-display:   'Outfit', sans-serif;
+  --font-mono:      'JetBrains Mono', monospace;
+  --font-body:      'Inter', sans-serif;
 
   /* Spacing */
   --sp-xs: 0.25rem;
@@ -43,12 +43,12 @@
   --sp-2xl: 3rem;
 
   /* Border radius */
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 8px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
 
   /* Transitions */
-  --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-slow: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -79,25 +79,19 @@ html { scroll-behavior: smooth; }
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
+    linear-gradient(rgba(139, 92, 246, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.015) 1px, transparent 1px);
   background-size: 60px 60px;
   pointer-events: none;
   z-index: 0;
 }
 
-/* Scanlines */
+/* Scanlines - removed for a cleaner modern look */
 .hackdecoded-theme::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    rgba(0,0,0,0.08) 3px,
-    rgba(0,0,0,0.08) 4px
-  );
+  background: transparent;
   pointer-events: none;
   z-index: 0;
 }
@@ -111,7 +105,7 @@ html { scroll-behavior: smooth; }
   width: 60vw;
   height: 60vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,212,255,0.04) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
   animation: driftA 25s ease-in-out infinite alternate;
@@ -125,7 +119,7 @@ html { scroll-behavior: smooth; }
   width: 55vw;
   height: 55vw;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(153,68,255,0.04) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(192, 132, 252, 0.05) 0%, transparent 65%);
   pointer-events: none;
   z-index: 0;
   animation: driftB 30s ease-in-out infinite alternate;

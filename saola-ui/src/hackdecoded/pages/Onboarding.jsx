@@ -17,8 +17,15 @@ const LANGUAGES = [
 ]
 
 const getBgRGB = (color) => {
-  const map = { 'var(--cyber-blue)': '0,212,255', 'var(--cyber-green)': '0,255,136', 'var(--cyber-purple)': '170,68,255', 'var(--cyber-yellow)': '255,221,0', 'var(--cyber-orange)': '255,136,0', 'var(--cyber-red)': '255,51,85' }
-  return map[color] || '0,212,255'
+  const map = { 
+    'var(--cyber-blue)': '139,92,246', 
+    'var(--cyber-green)': '16,185,129', 
+    'var(--cyber-purple)': '192,132,252', 
+    'var(--cyber-yellow)': '234,179,8', 
+    'var(--cyber-orange)': '249,115,22', 
+    'var(--cyber-red)': '244,63,94' 
+  }
+  return map[color] || '139,92,246'
 }
 
 // Steps: 1=Language, 2=SignIn, 3=Background
@@ -58,7 +65,6 @@ export default function Onboarding({ onComplete }) {
   }
 
   const handleGoogleSignIn = () => {
-    // Simulate Google sign-in with a mock user
     const mockUser = {
       name: 'Google User',
       email: 'user@gmail.com',
@@ -80,7 +86,6 @@ export default function Onboarding({ onComplete }) {
       if (password.length < 6) { setAuthError('Password must be at least 6 characters'); return }
       if (password !== confirmPassword) { setAuthError('Passwords do not match'); return }
 
-      // Save to localStorage as "registered users"
       const users = JSON.parse(localStorage.getItem('hd_users') || '[]')
       const exists = users.find(u => u.email === email)
       if (exists) { setAuthError('An account with this email already exists'); return }
@@ -92,7 +97,6 @@ export default function Onboarding({ onComplete }) {
       goNext()
 
     } else {
-      // Login
       if (!email.trim() || !password.trim()) { setAuthError('Please fill in all fields'); return }
       const users = JSON.parse(localStorage.getItem('hd_users') || '[]')
       const user = users.find(u => u.email === email && u.password === password)
@@ -116,7 +120,6 @@ export default function Onboarding({ onComplete }) {
     navigate('/')
   }
 
-  // Step indicators
   const STEPS = [
     { n: 1, label: selectedLang === 'hi' ? 'भाषा' : 'Language' },
     { n: 2, label: selectedLang === 'hi' ? 'साइन इन' : 'Sign In' },
@@ -127,46 +130,46 @@ export default function Onboarding({ onComplete }) {
     <div style={{ minHeight: '100vh', background: 'var(--cyber-black)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', position: 'relative', overflow: 'hidden' }}>
 
       {/* Background orbs */}
-      <div style={{ position: 'absolute', top: '20%', left: '8%', width: '350px', height: '350px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
-      <div style={{ position: 'absolute', bottom: '15%', right: '8%', width: '400px', height: '400px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(170,68,255,0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', top: '20%', left: '8%', width: '350px', height: '350px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(139,92,246,0.06) 0%, transparent 70%)', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', bottom: '15%', right: '8%', width: '400px', height: '400px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(192,132,252,0.05) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
       <div style={{ width: '100%', maxWidth: '680px', opacity: animating ? 0 : 1, transform: animating ? 'translateY(10px)' : 'translateY(0)', transition: 'all 0.25s ease' }}>
 
         {/* Logo */}
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '4px', color: 'var(--cyber-blue)', marginBottom: '0.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '3px', color: 'var(--cyber-blue)', marginBottom: '0.5rem', fontWeight: '600' }}>
             {t('ob_init')}
           </div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: '700', color: '#fff', letterSpacing: '2px' }}>
-            HACK<span style={{ color: 'var(--cyber-blue)' }}>DECODED</span>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontWeight: '800', color: '#fff', letterSpacing: '1px' }}>
+            HACK<span style={{ color: 'var(--cyber-blue)', textShadow: '0 0 20px rgba(139,92,246,0.4)' }}>DECODED</span>
           </h1>
-          <p style={{ color: 'var(--cyber-text-dim)', marginTop: '0.4rem', fontFamily: 'var(--font-body)', fontSize: '0.9rem' }}>
+          <p style={{ color: 'var(--cyber-text-dim)', marginTop: '0.5rem', fontFamily: 'var(--font-body)', fontSize: '0.95rem' }}>
             Cybersecurity intelligence — translated for humans
           </p>
         </div>
 
         {/* Step Indicators */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '2rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '2.5rem' }}>
           {STEPS.map((s, i) => (
             <div key={s.n} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
                 <div style={{
-                  width: '30px', height: '30px', borderRadius: '50%',
+                  width: '32px', height: '32px', borderRadius: '50%',
                   border: `1px solid ${step >= s.n ? 'var(--cyber-blue)' : 'var(--cyber-border)'}`,
-                  background: step > s.n ? 'var(--cyber-blue)' : step === s.n ? 'rgba(0,212,255,0.15)' : 'transparent',
+                  background: step > s.n ? 'var(--cyber-blue)' : step === s.n ? 'rgba(139,92,246,0.15)' : 'transparent',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--font-mono)', fontSize: '11px',
-                  color: step >= s.n ? (step > s.n ? '#000' : 'var(--cyber-blue)') : 'var(--cyber-text-dim)',
-                  transition: 'all 0.3s', fontWeight: step > s.n ? '700' : '400'
+                  fontFamily: 'var(--font-mono)', fontSize: '12px',
+                  color: step >= s.n ? (step > s.n ? '#fff' : 'var(--cyber-blue)') : 'var(--cyber-text-dim)',
+                  transition: 'all 0.3s', fontWeight: '700'
                 }}>
                   {step > s.n ? '✓' : s.n}
                 </div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '8px', color: step >= s.n ? 'var(--cyber-blue)' : 'var(--cyber-text-dim)', letterSpacing: '1px', whiteSpace: 'nowrap' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: step >= s.n ? 'var(--cyber-blue)' : 'var(--cyber-text-dim)', letterSpacing: '0.5px', whiteSpace: 'nowrap', fontWeight: '600' }}>
                   {s.label}
                 </div>
               </div>
               {i < STEPS.length - 1 && (
-                <div style={{ width: '50px', height: '1px', background: step > s.n ? 'var(--cyber-blue)' : 'var(--cyber-border)', transition: 'all 0.3s', marginBottom: '16px' }} />
+                <div style={{ width: '60px', height: '1px', background: step > s.n ? 'var(--cyber-blue)' : 'var(--cyber-border)', transition: 'all 0.3s', marginBottom: '18px' }} />
               )}
             </div>
           ))}
@@ -175,27 +178,27 @@ export default function Onboarding({ onComplete }) {
         {/* ─── STEP 1 — Language ─── */}
         {step === 1 && (
           <div style={{ animation: 'fadeInUp 0.4s ease' }}>
-            <div style={{ background: 'var(--cyber-card)', border: '1px solid var(--cyber-border)', borderRadius: '4px', padding: '1.25rem 1.5rem', marginBottom: '1rem', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ background: 'var(--cyber-card)', border: '1px solid var(--cyber-border)', borderRadius: '12px', padding: '1.25rem 1.5rem', marginBottom: '1rem', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '2px', background: 'linear-gradient(90deg, transparent, var(--cyber-blue), transparent)' }} />
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '3px', color: 'var(--cyber-blue)', marginBottom: '4px' }}>▸ STEP 01 — LANGUAGE</div>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: '600', color: '#fff' }}>Choose your language</h2>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '2px', color: 'var(--cyber-blue)', marginBottom: '4px', fontWeight: '600' }}>▸ STEP 01 — LANGUAGE</div>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: '700', color: '#fff' }}>Choose your language</h2>
               <p style={{ color: 'var(--cyber-text-dim)', fontSize: '0.85rem', fontFamily: 'var(--font-body)', marginTop: '2px' }}>Select the language for your entire experience.</p>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
               {LANGUAGES.map(lang => (
                 <button key={lang.id} onClick={() => handleLangSelect(lang.id)} style={{
-                  background: selectedLang === lang.id ? 'rgba(0,212,255,0.1)' : 'var(--cyber-card)',
+                  background: selectedLang === lang.id ? 'rgba(139,92,246,0.1)' : 'var(--cyber-card)',
                   border: `1px solid ${selectedLang === lang.id ? 'var(--cyber-blue)' : 'var(--cyber-border)'}`,
-                  borderRadius: '4px', padding: '2rem 1rem', cursor: 'pointer',
-                  textAlign: 'center', transition: 'all 0.2s', position: 'relative', overflow: 'hidden'
+                  borderRadius: '12px', padding: '2rem 1rem', cursor: 'pointer',
+                  textAlign: 'center', transition: 'all 0.25s', position: 'relative', overflow: 'hidden'
                 }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--cyber-blue)'; e.currentTarget.style.background = 'rgba(0,212,255,0.08)' }}
-                  onMouseLeave={e => { if (selectedLang !== lang.id) { e.currentTarget.style.borderColor = 'var(--cyber-border)'; e.currentTarget.style.background = 'var(--cyber-card)' } }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--cyber-blue)'; e.currentTarget.style.background = 'rgba(139,92,246,0.08)'; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                  onMouseLeave={e => { if (selectedLang !== lang.id) { e.currentTarget.style.borderColor = 'var(--cyber-border)'; e.currentTarget.style.background = 'var(--cyber-card)' }; e.currentTarget.style.transform = 'none' }}
                 >
                   {selectedLang === lang.id && <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '2px', background: 'linear-gradient(90deg, transparent, var(--cyber-blue), transparent)' }} />}
                   <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>{lang.flag}</div>
-                  <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', fontWeight: '600', color: selectedLang === lang.id ? 'var(--cyber-blue)' : '#fff', letterSpacing: '1px', marginBottom: '0.25rem' }}>{lang.native}</div>
-                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: 'var(--cyber-text-dim)' }}>{lang.desc}</div>
+                  <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: '700', color: selectedLang === lang.id ? 'var(--cyber-blue)' : '#fff', letterSpacing: '0.5px', marginBottom: '0.25rem' }}>{lang.native}</div>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.85rem', color: 'var(--cyber-text-dim)' }}>{lang.desc}</div>
                 </button>
               ))}
             </div>
@@ -206,22 +209,21 @@ export default function Onboarding({ onComplete }) {
         {step === 2 && (
           <div style={{ animation: 'fadeInUp 0.4s ease' }}>
 
-            {/* Back button */}
-            <button onClick={goBack} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'transparent', border: 'none', color: 'var(--cyber-text-dim)', fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '2px', cursor: 'pointer', marginBottom: '1rem', transition: 'color 0.2s' }}
+            <button onClick={goBack} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'transparent', border: 'none', color: 'var(--cyber-text-dim)', fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '2px', cursor: 'pointer', marginBottom: '1rem', transition: 'color 0.2s', fontWeight: '600' }}
               onMouseEnter={e => e.currentTarget.style.color = 'var(--cyber-blue)'}
               onMouseLeave={e => e.currentTarget.style.color = 'var(--cyber-text-dim)'}
             >
               ◀ {selectedLang === 'hi' ? 'वापस जाएं' : 'GO BACK'}
             </button>
 
-            <div style={{ background: 'var(--cyber-card)', border: '1px solid var(--cyber-border)', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
+            <div style={{ background: 'var(--cyber-card)', border: '1px solid var(--cyber-border)', borderRadius: '12px', overflow: 'hidden', position: 'relative', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}>
               <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '2px', background: 'linear-gradient(90deg, transparent, var(--cyber-green), transparent)' }} />
 
               <div style={{ padding: '2rem' }}>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '3px', color: 'var(--cyber-green)', marginBottom: '0.5rem' }}>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '2px', color: 'var(--cyber-green)', marginBottom: '0.5rem', fontWeight: '600' }}>
                   ▸ STEP 02 — {selectedLang === 'hi' ? 'साइन इन' : 'SIGN IN'}
                 </div>
-                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: '600', color: '#fff', marginBottom: '0.25rem', letterSpacing: '1px' }}>
+                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', fontWeight: '700', color: '#fff', marginBottom: '0.25rem' }}>
                   {selectedLang === 'hi' ? 'अपने खाते में लॉग इन करें' : 'Sign in to your account'}
                 </h2>
                 <p style={{ color: 'var(--cyber-text-dim)', fontSize: '0.85rem', fontFamily: 'var(--font-body)', marginBottom: '1.75rem' }}>
@@ -231,18 +233,17 @@ export default function Onboarding({ onComplete }) {
                 {/* Google Button */}
                 <button onClick={handleGoogleSignIn} style={{
                   width: '100%', padding: '0.85rem',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.15)',
-                  borderRadius: '4px', color: '#fff',
-                  fontFamily: 'var(--font-body)', fontSize: '0.95rem',
+                  background: 'rgba(255,255,255,0.03)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: '9999px', color: '#fff',
+                  fontFamily: 'var(--font-body)', fontSize: '0.95rem', fontWeight: '600',
                   cursor: 'pointer', transition: 'all 0.2s',
                   display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
                   marginBottom: '1.25rem'
                 }}
-                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)' }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)' }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)' }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.03)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)' }}
                 >
-                  {/* Google G icon */}
                   <svg width="18" height="18" viewBox="0 0 24 24">
                     <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                     <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -255,61 +256,61 @@ export default function Onboarding({ onComplete }) {
                 {/* Divider */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '1.25rem' }}>
                   <div style={{ flex: 1, height: '1px', background: 'var(--cyber-border)' }} />
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--cyber-text-dim)', letterSpacing: '2px' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', color: 'var(--cyber-text-dim)', letterSpacing: '1px', fontWeight: '600' }}>
                     {selectedLang === 'hi' ? 'या' : 'OR'}
                   </span>
                   <div style={{ flex: 1, height: '1px', background: 'var(--cyber-border)' }} />
                 </div>
 
                 {/* Auth mode toggle */}
-                <div style={{ display: 'flex', marginBottom: '1.25rem', background: 'rgba(0,0,0,0.3)', borderRadius: '4px', padding: '3px' }}>
+                <div style={{ display: 'flex', marginBottom: '1.25rem', background: 'rgba(0,0,0,0.3)', borderRadius: '9999px', padding: '3px' }}>
                   {[
                     { mode: 'login', label: selectedLang === 'hi' ? 'लॉग इन' : 'Log In' },
                     { mode: 'register', label: selectedLang === 'hi' ? 'रजिस्टर करें' : 'Register' }
                   ].map(item => (
                     <button key={item.mode} onClick={() => { setAuthMode(item.mode); setAuthError('') }} style={{
                       flex: 1, padding: '0.6rem',
-                      background: authMode === item.mode ? 'rgba(0,212,255,0.15)' : 'transparent',
-                      border: `1px solid ${authMode === item.mode ? 'var(--cyber-blue)' : 'transparent'}`,
-                      borderRadius: '3px', color: authMode === item.mode ? 'var(--cyber-blue)' : 'var(--cyber-text-dim)',
-                      fontFamily: 'var(--font-display)', fontSize: '11px', letterSpacing: '1px',
+                      background: authMode === item.mode ? 'rgba(139,92,246,0.15)' : 'transparent',
+                      border: `1px solid ${authMode === item.mode ? 'rgba(139,92,246,0.3)' : 'transparent'}`,
+                      borderRadius: '9999px', color: authMode === item.mode ? '#fff' : 'var(--cyber-text-dim)',
+                      fontFamily: 'var(--font-display)', fontSize: '11px', fontWeight: '600',
                       cursor: 'pointer', transition: 'all 0.2s'
                     }}>{item.label}</button>
                   ))}
                 </div>
 
                 {/* Form */}
-                <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <form onSubmit={handleAuth} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                   {authMode === 'register' && (
                     <div>
-                      <label style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '2px', color: 'var(--cyber-text-dim)', display: 'block', marginBottom: '6px' }}>
+                      <label style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '1px', color: 'var(--cyber-text-dim)', display: 'block', marginBottom: '6px', fontWeight: '600' }}>
                         {selectedLang === 'hi' ? 'USERNAME' : 'USERNAME'}
                       </label>
-                      <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder={selectedLang === 'hi' ? 'अपना नाम दर्ज करें' : 'Enter your name'} style={{ width: '100%', background: 'rgba(0,212,255,0.04)', border: '1px solid var(--cyber-border)', borderRadius: '4px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-mono)', fontSize: '13px', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
-                        onFocus={e => e.target.style.borderColor = 'var(--cyber-blue)'}
-                        onBlur={e => e.target.style.borderColor = 'var(--cyber-border)'}
+                      <input type="text" value={username} onChange={e => setUsername(e.target.value)} placeholder={selectedLang === 'hi' ? 'अपना नाम दर्ज करें' : 'Enter your name'} style={{ width: '100%', background: 'rgba(139,92,246,0.03)', border: '1px solid var(--cyber-border)', borderRadius: '8px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-body)', fontSize: '13px', outline: 'none', transition: 'all 0.25s', boxSizing: 'border-box' }}
+                        onFocus={e => { e.target.style.borderColor = 'var(--cyber-blue)'; e.target.style.boxShadow = '0 0 0 3px rgba(139,92,246,0.1)' }}
+                        onBlur={e => { e.target.style.borderColor = 'var(--cyber-border)'; e.target.style.boxShadow = 'none' }}
                       />
                     </div>
                   )}
 
                   <div>
-                    <label style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '2px', color: 'var(--cyber-text-dim)', display: 'block', marginBottom: '6px' }}>EMAIL</label>
-                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" style={{ width: '100%', background: 'rgba(0,212,255,0.04)', border: '1px solid var(--cyber-border)', borderRadius: '4px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-mono)', fontSize: '13px', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
-                      onFocus={e => e.target.style.borderColor = 'var(--cyber-blue)'}
-                      onBlur={e => e.target.style.borderColor = 'var(--cyber-border)'}
+                    <label style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '1px', color: 'var(--cyber-text-dim)', display: 'block', marginBottom: '6px', fontWeight: '600' }}>EMAIL</label>
+                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" style={{ width: '100%', background: 'rgba(139,92,246,0.03)', border: '1px solid var(--cyber-border)', borderRadius: '8px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-body)', fontSize: '13px', outline: 'none', transition: 'all 0.25s', boxSizing: 'border-box' }}
+                      onFocus={e => { e.target.style.borderColor = 'var(--cyber-blue)'; e.target.style.boxShadow = '0 0 0 3px rgba(139,92,246,0.1)' }}
+                      onBlur={e => { e.target.style.borderColor = 'var(--cyber-border)'; e.target.style.boxShadow = 'none' }}
                     />
                   </div>
 
                   <div>
-                    <label style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '2px', color: 'var(--cyber-text-dim)', display: 'block', marginBottom: '6px' }}>
+                    <label style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '1px', color: 'var(--cyber-text-dim)', display: 'block', marginBottom: '6px', fontWeight: '600' }}>
                       {selectedLang === 'hi' ? 'पासवर्ड' : 'PASSWORD'}
                     </label>
                     <div style={{ position: 'relative' }}>
-                      <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" style={{ width: '100%', background: 'rgba(0,212,255,0.04)', border: '1px solid var(--cyber-border)', borderRadius: '4px', padding: '0.75rem 3rem 0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-mono)', fontSize: '13px', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
-                        onFocus={e => e.target.style.borderColor = 'var(--cyber-blue)'}
-                        onBlur={e => e.target.style.borderColor = 'var(--cyber-border)'}
+                      <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" style={{ width: '100%', background: 'rgba(139,92,246,0.03)', border: '1px solid var(--cyber-border)', borderRadius: '8px', padding: '0.75rem 3rem 0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-body)', fontSize: '13px', outline: 'none', transition: 'all 0.25s', boxSizing: 'border-box' }}
+                        onFocus={e => { e.target.style.borderColor = 'var(--cyber-blue)'; e.target.style.boxShadow = '0 0 0 3px rgba(139,92,246,0.1)' }}
+                        onBlur={e => { e.target.style.borderColor = 'var(--cyber-border)'; e.target.style.boxShadow = 'none' }}
                       />
-                      <button type="button" onClick={() => setShowPassword(p => !p)} style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: 'var(--cyber-text-dim)', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: '10px' }}>
+                      <button type="button" onClick={() => setShowPassword(p => !p)} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: 'var(--cyber-text-dim)', cursor: 'pointer', fontFamily: 'var(--font-mono)', fontSize: '10px', fontWeight: '600' }}>
                         {showPassword ? 'HIDE' : 'SHOW'}
                       </button>
                     </div>
@@ -317,33 +318,33 @@ export default function Onboarding({ onComplete }) {
 
                   {authMode === 'register' && (
                     <div>
-                      <label style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '2px', color: 'var(--cyber-text-dim)', display: 'block', marginBottom: '6px' }}>
+                      <label style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '1px', color: 'var(--cyber-text-dim)', display: 'block', marginBottom: '6px', fontWeight: '600' }}>
                         {selectedLang === 'hi' ? 'पासवर्ड दोहराएं' : 'CONFIRM PASSWORD'}
                       </label>
-                      <input type={showPassword ? 'text' : 'password'} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="••••••••" style={{ width: '100%', background: 'rgba(0,212,255,0.04)', border: '1px solid var(--cyber-border)', borderRadius: '4px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-mono)', fontSize: '13px', outline: 'none', transition: 'border-color 0.2s', boxSizing: 'border-box' }}
-                        onFocus={e => e.target.style.borderColor = 'var(--cyber-blue)'}
-                        onBlur={e => e.target.style.borderColor = 'var(--cyber-border)'}
+                      <input type={showPassword ? 'text' : 'password'} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="••••••••" style={{ width: '100%', background: 'rgba(139,92,246,0.03)', border: '1px solid var(--cyber-border)', borderRadius: '8px', padding: '0.75rem 1rem', color: '#fff', fontFamily: 'var(--font-body)', fontSize: '13px', outline: 'none', transition: 'all 0.25s', boxSizing: 'border-box' }}
+                        onFocus={e => { e.target.style.borderColor = 'var(--cyber-blue)'; e.target.style.boxShadow = '0 0 0 3px rgba(139,92,246,0.1)' }}
+                        onBlur={e => { e.target.style.borderColor = 'var(--cyber-border)'; e.target.style.boxShadow = 'none' }}
                       />
                     </div>
                   )}
 
                   {/* Error message */}
                   {authError && (
-                    <div style={{ background: 'rgba(255,51,85,0.1)', border: '1px solid rgba(255,51,85,0.4)', borderRadius: '4px', padding: '0.6rem 0.9rem', fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--cyber-red)' }}>
+                    <div style={{ background: 'rgba(244,63,94,0.1)', border: '1px solid rgba(244,63,94,0.4)', borderRadius: '8px', padding: '0.6rem 0.9rem', fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--cyber-red)', fontWeight: '600' }}>
                       ⚠ {authError}
                     </div>
                   )}
 
                   <button type="submit" style={{
                     width: '100%', padding: '0.9rem',
-                    background: 'rgba(0,255,136,0.1)',
+                    background: 'rgba(16,185,129,0.1)',
                     border: '1px solid var(--cyber-green)',
-                    borderRadius: '4px', color: 'var(--cyber-green)',
-                    fontFamily: 'var(--font-display)', fontSize: '12px',
-                    letterSpacing: '2px', cursor: 'pointer', transition: 'all 0.2s', marginTop: '4px'
+                    borderRadius: '9999px', color: 'var(--cyber-green)',
+                    fontFamily: 'var(--font-display)', fontSize: '12px', fontWeight: '700',
+                    letterSpacing: '1px', cursor: 'pointer', transition: 'all 0.2s', marginTop: '4px'
                   }}
-                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(0,255,136,0.18)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(0,255,136,0.1)'}
+                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(16,185,129,0.18)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'rgba(16,185,129,0.1)'}
                   >
                     {authMode === 'login'
                       ? (selectedLang === 'hi' ? 'लॉग इन करें ▸' : 'LOG IN ▸')
@@ -352,7 +353,7 @@ export default function Onboarding({ onComplete }) {
                   </button>
                 </form>
 
-                <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.78rem', color: 'var(--cyber-text-dim)', textAlign: 'center', marginTop: '1rem', lineHeight: 1.5 }}>
+                <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: 'var(--cyber-text-dim)', textAlign: 'center', marginTop: '1.25rem', lineHeight: 1.5 }}>
                   {selectedLang === 'hi'
                     ? '🔒 आपका डेटा सुरक्षित है। हम कुछ भी शेयर नहीं करते।'
                     : '🔒 Your data stays private. We never share anything.'
@@ -367,20 +368,19 @@ export default function Onboarding({ onComplete }) {
         {step === 3 && (
           <div style={{ animation: 'fadeInUp 0.4s ease' }}>
 
-            {/* Back button */}
-            <button onClick={goBack} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'transparent', border: 'none', color: 'var(--cyber-text-dim)', fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '2px', cursor: 'pointer', marginBottom: '1rem', transition: 'color 0.2s' }}
+            <button onClick={goBack} style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'transparent', border: 'none', color: 'var(--cyber-text-dim)', fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '2px', cursor: 'pointer', marginBottom: '1rem', transition: 'color 0.2s', fontWeight: '600' }}
               onMouseEnter={e => e.currentTarget.style.color = 'var(--cyber-blue)'}
               onMouseLeave={e => e.currentTarget.style.color = 'var(--cyber-text-dim)'}
             >
               ◀ {selectedLang === 'hi' ? 'वापस जाएं' : 'GO BACK'}
             </button>
 
-            <div style={{ background: 'var(--cyber-card)', border: '1px solid var(--cyber-border)', borderRadius: '4px', padding: '1.25rem 1.5rem', marginBottom: '1rem', position: 'relative', overflow: 'hidden' }}>
+            <div style={{ background: 'var(--cyber-card)', border: '1px solid var(--cyber-border)', borderRadius: '12px', padding: '1.25rem 1.5rem', marginBottom: '1rem', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '2px', background: 'linear-gradient(90deg, transparent, var(--cyber-purple), transparent)' }} />
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '3px', color: 'var(--cyber-purple)', marginBottom: '4px' }}>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '10px', letterSpacing: '2px', color: 'var(--cyber-purple)', marginBottom: '4px', fontWeight: '600' }}>
                 ▸ STEP 03 — {selectedLang === 'hi' ? 'प्रोफ़ाइल' : 'PROFILE'}
               </div>
-              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: '600', color: '#fff' }}>
+              <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '1.3rem', fontWeight: '700', color: '#fff' }}>
                 {selectedLang === 'hi' ? `${loggedInUser?.name}, आपकी पृष्ठभूमि क्या है?` : `${loggedInUser?.name}, what is your background?`}
               </h2>
               <p style={{ color: 'var(--cyber-text-dim)', fontSize: '0.85rem', fontFamily: 'var(--font-body)', marginTop: '2px' }}>
@@ -388,31 +388,38 @@ export default function Onboarding({ onComplete }) {
               </p>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(185px, 1fr))', gap: '10px', marginBottom: '1rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(185px, 1fr))', gap: '10px', marginBottom: '1.25rem' }}>
               {BACKGROUNDS.map((bg, i) => (
                 <button key={bg.id} onClick={() => setSelected(bg)} style={{
-                  background: selected?.id === bg.id ? `rgba(${getBgRGB(bg.color)},0.1)` : 'var(--cyber-card)',
+                  background: selected?.id === bg.id ? `rgba(${getBgRGB(bg.color)},0.08)` : 'var(--cyber-card)',
                   border: `1px solid ${selected?.id === bg.id ? bg.color : 'var(--cyber-border)'}`,
-                  borderRadius: '4px', padding: '1rem', cursor: 'pointer',
-                  textAlign: 'left', transition: 'all 0.2s', position: 'relative', overflow: 'hidden',
+                  borderRadius: '12px', padding: '1.25rem 1rem', cursor: 'pointer',
+                  textAlign: 'left', transition: 'all 0.25s', position: 'relative', overflow: 'hidden',
                   animation: `fadeInUp 0.3s ease ${i * 0.05}s both`
-                }}>
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = bg.color; e.currentTarget.style.transform = 'translateY(-2px)' }}
+                  onMouseLeave={e => { if (selected?.id !== bg.id) e.currentTarget.style.borderColor = 'var(--cyber-border)'; e.currentTarget.style.transform = 'none' }}
+                >
                   {selected?.id === bg.id && <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '2px', background: `linear-gradient(90deg, transparent, ${bg.color}, transparent)` }} />}
-                  <div style={{ fontSize: '1.2rem', marginBottom: '0.35rem', color: selected?.id === bg.id ? bg.color : 'var(--cyber-text-dim)' }}>{bg.icon}</div>
-                  <div style={{ fontFamily: 'var(--font-display)', fontSize: '0.82rem', fontWeight: '600', color: selected?.id === bg.id ? bg.color : '#fff', letterSpacing: '1px', marginBottom: '0.2rem' }}>{t(bg.labelKey)}</div>
-                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', color: 'var(--cyber-text-dim)', lineHeight: 1.4 }}>{t(bg.descKey)}</div>
+                  <div style={{ fontSize: '1.4rem', marginBottom: '0.35rem', color: selected?.id === bg.id ? bg.color : 'var(--cyber-text-dim)' }}>{bg.icon}</div>
+                  <div style={{ fontFamily: 'var(--font-display)', fontSize: '0.9rem', fontWeight: '700', color: selected?.id === bg.id ? bg.color : '#fff', letterSpacing: '0.5px', marginBottom: '0.2rem' }}>{t(bg.labelKey)}</div>
+                  <div style={{ fontFamily: 'var(--font-body)', fontSize: '0.8rem', color: 'var(--cyber-text-dim)', lineHeight: 1.4 }}>{t(bg.descKey)}</div>
                 </button>
               ))}
             </div>
 
             <button onClick={handleComplete} disabled={!selected} style={{
               width: '100%', padding: '1rem',
-              background: selected ? 'rgba(170,68,255,0.1)' : 'transparent',
+              background: selected ? 'rgba(139,92,246,0.12)' : 'transparent',
               border: `1px solid ${selected ? 'var(--cyber-purple)' : 'var(--cyber-border)'}`,
-              borderRadius: '4px', color: selected ? 'var(--cyber-purple)' : 'var(--cyber-text-dim)',
-              fontFamily: 'var(--font-display)', fontSize: '12px',
-              letterSpacing: '3px', cursor: selected ? 'pointer' : 'not-allowed', transition: 'all 0.2s'
-            }}>
+              borderRadius: '9999px', color: selected ? '#fff' : 'var(--cyber-text-dim)',
+              fontFamily: 'var(--font-display)', fontSize: '12px', fontWeight: '700',
+              letterSpacing: '2px', cursor: selected ? 'pointer' : 'not-allowed', transition: 'all 0.2s',
+              boxShadow: selected ? '0 4px 20px rgba(139,92,246,0.2)' : 'none'
+            }}
+              onMouseEnter={e => { if (selected) e.currentTarget.style.background = 'rgba(139,92,246,0.2)' }}
+              onMouseLeave={e => { if (selected) e.currentTarget.style.background = 'rgba(139,92,246,0.12)' }}
+            >
               {selectedLang === 'hi' ? 'सिस्टम शुरू करें ▸' : 'INITIALIZE SYSTEM ▸'}
             </button>
           </div>

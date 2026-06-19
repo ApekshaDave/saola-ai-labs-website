@@ -1500,49 +1500,84 @@ function ProductsPage() {
               variants={fadeUp} 
               initial="hidden" 
               animate={inView ? "visible" : "hidden"}
-              whileHover={{ y: -8, boxShadow: "0 20px 40px rgba(0, 212, 255, 0.15)" }}
-              className="rounded-2xl p-8 border flex flex-col justify-between transition-all duration-300 relative overflow-hidden cursor-pointer"
+              whileHover={{ y: -8, boxShadow: "0 20px 60px rgba(139, 92, 246, 0.22)" }}
+              className="rounded-2xl p-8 flex flex-col justify-between transition-all duration-300 relative overflow-hidden cursor-pointer"
               style={{ 
-                background: "linear-gradient(135deg, #060b14 0%, #0d1526 100%)", 
-                border: "1px solid #162040" 
+                background: "linear-gradient(135deg, #07030f 0%, #0e0820 50%, #130b28 100%)", 
+                border: "1px solid rgba(139, 92, 246, 0.22)" 
               }}
               onClick={() => window.location.hash = ROUTES.hackdecoded}
             >
-              {/* Glow Accent */}
+              {/* Top violet gradient accent line */}
               <div 
                 className="absolute top-0 left-0 w-full h-[2px]" 
-                style={{ background: "linear-gradient(90deg, transparent, #00d4ff, transparent)" }} 
+                style={{ background: "linear-gradient(90deg, transparent, #8b5cf6, #c084fc, transparent)" }} 
+              />
+              {/* Subtle background glow orb */}
+              <div
+                style={{
+                  position: "absolute", top: "-40%", right: "-20%",
+                  width: "280px", height: "280px", borderRadius: "50%",
+                  background: "radial-gradient(circle, rgba(139,92,246,0.07) 0%, transparent 65%)",
+                  pointerEvents: "none"
+                }}
               />
               
-              <div>
+              <div style={{ position: "relative" }}>
                 <div className="flex justify-between items-start mb-6">
                   <div 
                     className="w-12 h-12 rounded-xl flex items-center justify-center" 
-                    style={{ background: "rgba(0, 212, 255, 0.1)", border: "1px solid rgba(0, 212, 255, 0.2)" }}
+                    style={{ 
+                      background: "rgba(139, 92, 246, 0.12)", 
+                      border: "1px solid rgba(139, 92, 246, 0.3)",
+                      boxShadow: "0 0 20px rgba(139,92,246,0.15)"
+                    }}
                   >
-                    <Lock size={22} style={{ color: "#00d4ff" }} aria-hidden="true" />
+                    <Lock size={22} style={{ color: "#8b5cf6" }} aria-hidden="true" />
                   </div>
                   <span 
-                    className="text-[10px] font-bold tracking-widest px-2.5 py-1 rounded bg-[#00d4ff]/10 border border-[#00d4ff]/20 text-[#00d4ff] uppercase"
+                    className="text-[10px] font-bold tracking-widest px-2.5 py-1 rounded-full uppercase"
+                    style={{
+                      background: "rgba(139,92,246,0.12)",
+                      border: "1px solid rgba(139,92,246,0.3)",
+                      color: "#c084fc",
+                      fontFamily: "'JetBrains Mono', 'Courier New', monospace"
+                    }}
                   >
-                    Active Platform
+                    ● Active Platform
                   </span>
                 </div>
                 
-                <h3 className="text-xl font-bold mb-2 text-white" style={{ fontFamily: "'Inter', sans-serif" }}>
-                  HACK<span style={{ color: "#00d4ff" }}>DECODED</span>
+                <h3 className="text-xl font-bold mb-2 text-white" style={{ fontFamily: "'Outfit', 'Inter', sans-serif", letterSpacing: "1px" }}>
+                  HACK<span style={{ color: "#8b5cf6", textShadow: "0 0 20px rgba(139,92,246,0.5)" }}>DECODED</span>
                 </h3>
                 
-                <p className="text-sm font-semibold mb-3" style={{ color: "rgba(255,255,255,0.7)" }}>
+                <p className="text-xs font-bold mb-3 tracking-widest uppercase" style={{ color: "#8b5cf6", fontFamily: "'JetBrains Mono', monospace" }}>
                   Cyber Security Awareness & Learning
                 </p>
                 
-                <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.55)" }}>
-                  An interactive, AI-powered explainer and training platform. Analyze cyber attacks in real-time, search CVE database vulnerabilities, test your team's readiness with interactive quizzes, and explore current threats in simple bilingual terms.
+                <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(241,245,249,0.6)", fontFamily: "'Inter', sans-serif" }}>
+                  An interactive, AI-powered explainer and training platform. Analyze cyber attacks in real-time, search CVE vulnerabilities, test readiness with quizzes, and explore live threats from the CISA catalog — in simple bilingual terms.
                 </p>
+
+                {/* Feature tags */}
+                <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "8px" }}>
+                  {["AI Explainer", "Live CVEs", "Quiz", "Threats"].map(tag => (
+                    <span key={tag} style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: "9px", letterSpacing: "0.5px",
+                      color: "rgba(192,132,252,0.8)",
+                      background: "rgba(139,92,246,0.08)",
+                      border: "1px solid rgba(139,92,246,0.2)",
+                      borderRadius: "9999px", padding: "2px 10px", fontWeight: "600"
+                    }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
 
-              <div className="flex items-center gap-2 text-sm font-bold mt-4" style={{ color: "#00d4ff" }}>
+              <div className="flex items-center gap-2 text-sm font-bold mt-4" style={{ color: "#8b5cf6", fontFamily: "'Outfit', sans-serif" }}>
                 Launch Platform <ArrowRight size={14} />
               </div>
             </motion.div>
