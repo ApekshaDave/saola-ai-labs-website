@@ -1,0 +1,28 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/cisa/kev",
+      "destination": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
+    },
+    {
+      "source": "/api/rss/hackernews",
+      "destination": "https://feeds.feedburner.com/TheHackersNews"
+    },
+    {
+      "source": "/api/rss/bleeping",
+      "destination": "https://www.bleepingcomputer.com/feed/"
+    },
+    {
+      "source": "/api/rss/krebs",
+      "destination": "https://krebsonsecurity.com/feed/"
+    },
+    {
+      "source": "/api/rss/cisa",
+      "destination": "https://www.cisa.gov/cybersecurity-advisories/advisories.xml"
+    },
+    {
+      "source": "/api/rss/darkreading",
+      "destination": "https://www.darkreading.com/rss.xml"
+    }
+  ]
+}
