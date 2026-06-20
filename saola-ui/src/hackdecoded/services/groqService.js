@@ -1,25 +1,17 @@
 import { buildSystemPrompt } from '../prompts/systemPrompt'
 
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions'
+// All Groq calls go through the secure server-side proxy (/api/groq).
+// The real GROQ_API_KEY lives in Vercel's environment variables — never in the browser.
+const GROQ_PROXY_URL = '/api/groq'
 
-export async function explainCyberAttack(articleText, userProfile) {
-  const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY
-  if (!GROQ_API_KEY) throw new Error('Groq API key not found. Please add VITE_GROQ_API_KEY to your .env file.')
-
-  const language = userProfile?.language || 'en'
-  const systemPrompt = buildSystemPrompt(userProfile, language)
-
-  const response = await fetch(GROQ_API_URL, {
+/**
+ * Internal helper — POST a chat completion request through the server proxy.
+ */
+async function callGroq(body) {
+  const response = await fetch(GROQ_PROXY_URL, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${GROQ_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Analyze and explain this cybersecurity article:\n\n${articleText}` }
-      ],
-      temperature: 0.3, max_tokens: 2500
-    })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
   })
 
   if (!response.ok) {
@@ -27,7 +19,26 @@ export async function explainCyberAttack(articleText, userProfile) {
     throw new Error(`Groq API error: ${response.status} — ${err}`)
   }
 
-  const data = await response.json()
+  return response.json()
+}
+
+/**
+ * Explain a cybersecurity article, adapted to the user's profile and language.
+ */
+export async function explainCyberAttack(articleText, userProfile) {
+  const language = userProfile?.language || 'en'
+  const systemPrompt = buildSystemPrompt(userProfile, language)
+
+  const data = await callGroq({
+    model: 'llama-3.3-70b-versatile',
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: `Analyze and explain this cybersecurity article:\n\n${articleText}` },
+    ],
+    temperature: 0.3,
+    max_tokens: 2500,
+  })
+
   const rawText = data.choices[0].message.content
   const cleaned = rawText.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
 
@@ -39,25 +50,23 @@ export async function explainCyberAttack(articleText, userProfile) {
   }
 }
 
+/**
+ * Generate a short plain-language explanation of a cybersecurity term or text.
+ */
 export async function generateSimpleExplanation(text, language = 'en') {
-  const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY
   const langInstruction = language === 'hi'
     ? 'Respond ONLY in Hindi language.'
     : 'Respond in English.'
 
-  const response = await fetch(GROQ_API_URL, {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${GROQ_API_KEY}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'llama-3.3-70b-versatile',
-      messages: [{
-        role: 'user',
-        content: `${langInstruction}\nExplain this cybersecurity information in 3-4 simple sentences that anyone can understand. Use a real-life analogy. Do not use technical jargon without explaining it.\nText: ${text}`
-      }],
-      temperature: 0.4, max_tokens: 400
-    })
+  const data = await callGroq({
+    model: 'llama-3.3-70b-versatile',
+    messages: [{
+      role: 'user',
+      content: `${langInstruction}\nExplain this cybersecurity information in 3-4 simple sentences that anyone can understand. Use a real-life analogy. Do not use technical jargon without explaining it.\nText: ${text}`,
+    }],
+    temperature: 0.4,
+    max_tokens: 400,
   })
 
-  const data = await response.json()
   return data.choices[0].message.content
 }

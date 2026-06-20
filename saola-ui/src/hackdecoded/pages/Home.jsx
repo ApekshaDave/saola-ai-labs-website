@@ -199,13 +199,14 @@ export default function Home({ userProfile }) {
             <div style={{ animation: 'fadeInUp 0.3s ease' }}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', letterSpacing: '2px', color: 'var(--cyber-blue)', marginBottom: '0.75rem', fontWeight: '600' }}>{t('home_text_label')}</div>
               <textarea value={textInput} onChange={e => setTextInput(e.target.value)} placeholder={t('home_text_placeholder')}
+                onKeyDown={e => { if (e.shiftKey && e.key === 'Enter' && textInput.trim()) { e.preventDefault(); handleText() } }}
                 style={{ width: '100%', minHeight: '160px', background: 'rgba(139,92,246,0.02)', border: '1px solid var(--cyber-border)', borderRadius: '8px', padding: '1rem', color: '#fff', fontFamily: 'var(--font-body)', fontSize: '14px', lineHeight: 1.6, outline: 'none', resize: 'vertical', transition: 'all 0.25s', boxSizing: 'border-box' }}
                 onFocus={e => { e.target.style.borderColor = 'var(--cyber-blue)'; e.target.style.boxShadow = '0 0 0 3px rgba(139,92,246,0.1)' }}
                 onBlur={e => { e.target.style.borderColor = 'var(--cyber-border)'; e.target.style.boxShadow = 'none' }}
               />
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '1rem', gap: '12px', flexWrap: 'wrap' }}>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '9px', color: 'var(--cyber-text-dim)', fontWeight: '600' }}>
-                  {textInput.length > 0 ? `${textInput.length} ${t('home_chars')}` : t('home_awaiting')}
+                  {textInput.length > 0 ? `${textInput.length} ${t('home_chars')} · Shift+Enter to decode` : t('home_awaiting')}
                 </div>
                 <button onClick={handleText} disabled={!textInput.trim()} style={{ 
                   background: textInput.trim() ? 'rgba(139,92,246,0.12)' : 'transparent', 

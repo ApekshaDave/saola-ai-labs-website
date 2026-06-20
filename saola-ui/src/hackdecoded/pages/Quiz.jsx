@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useLang } from '../context/LanguageContext'
 
+// All Groq calls go through the secure /api/groq server-side proxy — key is never in the browser.
 async function generateQuiz(articleText, language, userProfile) {
-  const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY
   const langInst = language === 'hi' ? 'Generate ALL questions, options, and explanations in Hindi. Keep CVE numbers and tool names in English.' : 'Generate in English.'
-  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+  const response = await fetch('/api/groq', {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${GROQ_API_KEY}`, 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
       messages: [{ role: 'user', content: `${langInst}\nAdapt difficulty for: ${userProfile?.background?.prompt || 'general audience'}.\nGenerate 5 multiple choice questions about this article. Return ONLY valid JSON:\n{"questions":[{"question":"?","options":["A","B","C","D"],"correctIndex":0,"explanation":"why"}]}\nArticle: ${articleText.substring(0, 3500)}` }],
@@ -18,6 +18,7 @@ async function generateQuiz(articleText, language, userProfile) {
   const raw = data.choices[0].message.content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim()
   return JSON.parse(raw)
 }
+
 
 export default function Quiz({ userProfile }) {
   const { t, language } = useLang()
